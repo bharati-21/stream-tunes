@@ -1,0 +1,25 @@
+:root {
+    /* background colors */
+    --light-theme-bg-color: #E5E5E5;
+    --light-theme-navbar-bg-color: #FFFFFF;
+    --dark-theme-bg-color: #282827;
+    --dark-theme-navbar-bg-color: #111111;
+    
+    /* default/ text colors */
+    --light-theme-text-color: #282827;
+    --dark-theme-text-color: #FFFFFF;
+
+    --overlay-text-color: #2842581a;
+    --overlay-bg-color: rgba(0,0,0,0.3);
+
+    --text-color: #282827;
+    --text-active-color: #282827be;
+
+    --primary-color: #E50048;
+    --primary-active-color: #c90039;
+    --primary-bg-color: #ffbfd2;
+
+    --secondary-color: #26a8ff;
+    --secondary-active-color: #0085de;
+    --secondary-bg-color: #b7e2ff;
+}
