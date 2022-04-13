@@ -1,0 +1,46 @@
+html {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 100%;
+}
+
+*, *::after, *::before {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+}
+
+div,
+section,
+aside,
+footer,
+header,
+nav,
+main,
+p,
+a {
+    line-height: unset;
+}
+
+a {
+    font-weight: inherit;
+    color: inherit;
+}
+
+.btn {
+    border-radius: var(--br-2);
+    -webkit-border-radius: var(--br-2);
+    -moz-border-radius: var(--br-2);
+    -ms-border-radius: var(--br-2);
+    -o-border-radius: var(--br-2);
+}
+
+.card {
+    border-radius: var(--br-2);
+    border: none;
+    -webkit-border-radius: var(--br-2);
+    -moz-border-radius: var(--br-2);
+    -ms-border-radius: var(--br-2);
+    -o-border-radius: var(--br-2);
+}
