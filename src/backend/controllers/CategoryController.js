@@ -32,7 +32,11 @@ export const getCategoryHandler = function (schema, request) {
   const { categoryId } = request.params;
   try {
     const category = schema.categories.findBy({ _id: categoryId }).attrs;
-    return new Response(200, {}, { category });
+    const videosModel = schema.videos.where({
+        categoryName: category.categoryName,
+      }).models;
+      const videos = videosModel.map((item) => item.attrs);
+    return new Response(200, {}, { category, videos });
   } catch (error) {
     return new Response(
       500,
