@@ -127,7 +127,6 @@
 	}
 
     .hamburger-menu {
-        /* display: none; */
         transform: translateX(1000%);
         -webkit-transform: translateX(1000%);
         -moz-transform: translateX(1000%);
