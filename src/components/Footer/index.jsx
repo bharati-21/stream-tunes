@@ -6,7 +6,7 @@ const Footer = () => {
 		<footer className="footer">
 			<div className="container px-3 py-1 flex-col flex-align-center flex-justify-center">
 				<p className="text-center flex-row flex-align-center flex-justify-center author">
-					<i class="fa-solid fa-code"></i> by{" "}
+					<i className="fa-solid fa-code"></i> by{" "}
 					<a
 						href="https://bharati-21.github.io/"
 						className="primary-color"
@@ -21,7 +21,7 @@ const Footer = () => {
 							className="btn btn-link"
 						>
 							<span className="icon">
-								<i class="fa-brands fa-twitter"></i>
+								<i className="fa-brands fa-twitter"></i>
 							</span>
 						</a>
 					</li>
@@ -31,7 +31,7 @@ const Footer = () => {
 							className="btn btn-link"
 						>
 							<span className="icon">
-								<i class="fa-brands fa-github"></i>
+								<i className="fa-brands fa-github"></i>
 							</span>
 						</a>
 					</li>
@@ -41,7 +41,7 @@ const Footer = () => {
 							className="btn btn-link"
 						>
 							<span className="icon">
-								<i class="fa-brands fa-linkedin-in"></i>
+								<i className="fa-brands fa-linkedin-in"></i>
 							</span>
 						</a>
 					</li>
@@ -51,7 +51,7 @@ const Footer = () => {
 							className="btn btn-link"
 						>
 							<span className="icon">
-								<i class="fa-solid fa-envelope"></i>
+								<i className="fa-solid fa-envelope"></i>
 							</span>
 						</a>
 					</li>
