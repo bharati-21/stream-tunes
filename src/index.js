@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { makeServer } from "./server";
 import { BrowserRouter } from "react-router-dom";
-import { ThemeProvider, CategoriesProvider, AuthProvider } from "contexts/";
-import Portal from "Portal";
+import { ThemeProvider } from "contexts/theme-context";
+import { CategoriesProvider } from "contexts/categories-context";
 
 // Call make Server
 makeServer();
