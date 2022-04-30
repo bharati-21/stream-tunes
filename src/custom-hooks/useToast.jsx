@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 
 const useToast = () => {
 	const showToast = (toastText="Operation Successfull", toastTheme="success") => {
-        console.log(toastText, toastTheme)
         
 		const notify = () => {
 			toast[toastTheme](toastText, {
