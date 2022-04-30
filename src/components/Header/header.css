@@ -1,0 +1,51 @@
+.header {
+    position: relative;
+    height: 60vh;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    background-color: var(--overlay-bg-color);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+img.hero-img {
+    height: 60vh;
+    width: 100%;
+    object-position: center 30%;
+}
+
+.hero-head {
+    font-size: 2.25rem;
+}
+
+.hero-content {
+    width: 100%;
+    gap: var(--space-1);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light-theme-navbar-bg-color);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.hero-cta {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--light-theme-navbar-bg-color);
+}
+
+.btn.hero-cta:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+}

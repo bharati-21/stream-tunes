@@ -13,3 +13,17 @@
     background-color: var(--light-theme-bg-color);
     color: var(--light-theme-text-color);
 }
+
+.App.light {
+    background-color: var(--light-theme-bg-color);
+    color: var(--light-theme-text-color);
+}
+
+.App.dark {
+    background-color: var(--dark-theme-bg-color);
+    color: var(--dark-theme-text-color);
+}
+
+.border-bottom-primary {
+    border-bottom: 2px solid var(--primary-color);
+}
