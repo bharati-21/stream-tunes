@@ -48,7 +48,7 @@ const Navbar = () => {
 
 	return (
 		<nav className="navbar flex-col flex-align-center flex-justify-between py-1">
-			<div className="container flex-row flex-align-center flex-justify-between">
+			<div className="navbar-wrapper flex-row flex-align-center flex-justify-between">
 				<div className="navbar-left-menu flex-row flex-align-center flex-justify-between">
 					<button className="btn-hamburger btn btn-icon btn-primary">
 						<Menu
@@ -74,7 +74,7 @@ const Navbar = () => {
 					<input
 						type="text"
 						id="input-inline-name"
-						className="input-text text-sm"
+						className="input-text text-sm px-0-25"
 						placeholder="Enter search text..."
 						required
 					/>
