@@ -5,10 +5,21 @@
 	top: 0;
 	left: 0;
 	z-index: 5;
+    width: 100%;
+    gap: var(--space-0-5);
+    padding: var(--space-1);
 }
 
 .App.dark .navbar {
 	background-color: var(--dark-theme-navbar-bg-color);
+}
+
+.navbar .container {
+    width: 100%;
+}
+
+.navbar-left-menu {
+    gap: var(--space-0-75);
 }
 
 .navbar .logo {
@@ -22,6 +33,7 @@
 
 .logo-text {
 	display: none;
+    font-size: 1.35rem;
 }
 
 .navbar-navlinks {
@@ -36,12 +48,20 @@
 	color: var(--primary-color);
 }
 
+.btn-theme, .btn-logout, .btn-login {
+    padding: 2px;
+}
+
 .navbar-navlinks .btn-icon.btn-theme:hover {
 	background-color: var(--secondary-bg-color);
 }
 
-.navbar-right-menu.list,
-.navbar-center-menu.list {
+.navbar-navlinks .btn-icon.btn-logout:hover, 
+.navbar-navlinks .btn-icon.btn-login:hover {
+	background-color: var(--primary-bg-color);
+}
+
+.navbar .navlink {
 	display: none;
 }
 
@@ -53,11 +73,12 @@
 .hamburger-menu {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     bottom: 0;
-    left: 35%;
+    right: 35%;
     text-align: center;
     z-index: 6;
+    padding: var(--space-2) var(--space-1);
     transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     -webkit-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     -moz-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
@@ -74,11 +95,11 @@
 }
 
 .close-hamburger-menu {
-    transform: translateX(1000%);
-    -webkit-transform: translateX(1000%);
-    -moz-transform: translateX(1000%);
-    -ms-transform: translateX(1000%);
-    -o-transform: translateX(1000%);
+    transform: translateX(-1000%);
+    -webkit-transform: translateX(-1000%);
+    -moz-transform: translateX(-1000%);
+    -ms-transform: translateX(-1000%);
+    -o-transform: translateX(-1000%);
 }
 
 .App.light .hamburger-menu {
@@ -94,10 +115,16 @@
     width: 90%;
 }
 
+.btn-close-icon {
+    position: absolute;
+    top: var(--space-2);
+}
+
 .hamburger-menu .list-item {
     width: 100%;
     border-bottom: 2px solid var(--light-theme-bg-color);
 }
+
 
 .hamburger-menu .list-item:first-child {
     border-top: 2px solid var(--light-theme-bg-color);
@@ -115,13 +142,94 @@
     background-color: transparent;
 }  
 
+.hamburger-menu .list-item a {
+    padding: 2px 5px;
+    gap: 5px;
+    max-width: 100%;
+}
+
+.hamburger-menu .list-item a.active {
+    border: none;
+    color: var(--text-color);
+    border-radius: var(--br-2);
+    background-color: var(--primary-bg-color);
+    -webkit-border-radius: var(--br-2);
+    -moz-border-radius: var(--br-2);
+    -ms-border-radius: var(--br-2);
+    -o-border-radius: var(--br-2);
+}
+
+.hamburger-menu .list-item a.active:hover {
+    color: var(--primary-active-color);
+}
+
+.search-form.mobile-search-form {
+    display: flex;
+    max-width: 100%;
+}
+
+.search-form.desktop-search-form { 
+    display: none;
+}
+
+.search-form {
+    border: 1px solid var(--primary-color);
+    border-radius: var(--br-2);
+    -webkit-border-radius: var(--br-2);
+    -moz-border-radius: var(--br-2);
+    -ms-border-radius: var(--br-2);
+    -o-border-radius: var(--br-2);
+    padding: 5px;
+    max-width: 200px;
+    width: 100%;
+}
+
+.search-form .input-text {
+    border: none;
+    outline: none;
+    max-width: 85%;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    background-color: inherit;
+    color: inherit;
+}
+
+.search-form .input-text:focus {
+    border: none;
+    outline: none;
+}
+
+.search-form .btn {
+    max-width: 5%;
+}
+
+.search-form .icon svg {
+    font-size: 1.25rem;
+    color: inherit;
+}
+
 @media screen and (min-width: 480px) {
+    .navbar {
+        padding: var(--space-1) var(--space-3);
+    }
+
     .logo-text {
         display: flex;
     }
 }
 
 @media screen and (min-width: 768px) {
+    .search-form.desktop-search-form {
+        display: flex;
+    }
+
+    .search-form.mobile-search-form {
+        display: none;
+    }
+
 	.btn.btn-hamburger {
 		display: none;
 	}
@@ -134,8 +242,7 @@
         -o-transform: translateX(1000%);
     }
 
-	.navbar-right-menu.list,
-	.navbar-center-menu.list {
+	.navbar .navlink {
 		display: flex;
 	}
 }

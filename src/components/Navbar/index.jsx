@@ -1,5 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { DarkMode, LightMode, Menu, Close } from "@mui/icons-material";
+import {
+	DarkMode,
+	LightMode,
+	Menu,
+	Close,
+	Search,
+	AccountCircle,
+	Logout,
+    HomeOutlined,
+    VideoLibraryOutlined,
+    ExploreOutlined,
+    FavoriteBorderOutlined,
+    WatchLaterOutlined,
+    HistoryOutlined,
+} from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
 
 import "./navbar.css";
@@ -33,9 +47,14 @@ const Navbar = () => {
 		setShowHamburgerMenu(hamburgerMenuState);
 
 	return (
-		<nav className="navbar px-3 py-1">
+		<nav className="navbar flex-col flex-align-center flex-justify-between py-1">
 			<div className="container flex-row flex-align-center flex-justify-between">
-				<div>
+				<div className="navbar-left-menu flex-row flex-align-center flex-justify-between">
+					<button className="btn-hamburger btn btn-icon btn-primary">
+						<Menu
+							onClick={() => handleChangeShowHamburgerMenu(true)}
+						/>
+					</button>
 					<Link
 						to="/"
 						className="logo flex-row flex-align-center flex-justify-between"
@@ -44,86 +63,131 @@ const Navbar = () => {
 							src={logo}
 							alt="StreamTunes Logo"
 							className="logo-img"
-							width="1rem"
-							height="1rem"
 						/>
-						<h4 className="logo-text">
+						<h5 className="logo-text">
 							Stream
 							<span className="primary-color">Tunes</span>
-						</h4>
+						</h5>
 					</Link>
 				</div>
-				<ul className="list list-inline navbar-center-menu flex-row flex-align-center flex-justify-between navbar-navlinks">
-					<li className="link">
-						<NavLink to="/">Home</NavLink>
-					</li>
-					<li className="link">
-						<NavLink to="/explore">Explore</NavLink>
-					</li>
-				</ul>
-				<ul className="list list-inline flex-row flex-align-center flex-justify-end navbar-navlinks navbar-right-menu">
-					{isAuth ? (
-						<button
-							className="btn btn-primary btn-logout px-0-5 py-0-25 text-sm"
-							onClick={handleLogoutUser}
-						>
-							Logout
-						</button>
-					) : (
-						<Link
-							to="/login"
-							className="btn btn-primary px-0-5 py-0-25 text-sm"
-						>
-							Login
-						</Link>
-					)}
+				<form className="search-form desktop-search-form flex-row flex-align-center flex-justify-between">
+					<input
+						type="text"
+						id="input-inline-name"
+						className="input-text text-sm"
+						placeholder="Enter search text..."
+						required
+					/>
 					<button
-						className="btn btn-secondary btn-icon btn-theme p-0-25"
-						onClick={handleThemeChange}
+						type="submit"
+						className="btn btn-primary btn-icon text-sm"
 					>
-						{theme === "light" ? <LightMode /> : <DarkMode />}
+						<span className="icon">
+							<Search />
+						</span>
 					</button>
+				</form>
+
+				<ul className="list list-inline flex-row flex-align-center flex-justify-end navbar-navlinks navbar-right-menu">
+					<li className="link navlink">
+						<NavLink to="/" className="text-sm px-0-25">
+							Home
+						</NavLink>
+					</li>
+					<li className="link navlink">
+						<NavLink to="/explore" className="text-sm px-0-25">
+							Explore
+						</NavLink>
+					</li>
+					{isAuth ? (
+						<li>
+							<button
+								className="btn btn-primary btn-icon btn-logout text-sm"
+								onClick={handleLogoutUser}
+							>
+								<Logout />
+							</button>
+						</li>
+					) : (
+						<li>
+							<Link
+								to="/login"
+								className="btn btn-primary btn-icon btn-login text-sm"
+							>
+								<AccountCircle />
+							</Link>
+						</li>
+					)}
+					<li>
+						<button
+							className="btn btn-secondary btn-icon btn-theme"
+							onClick={handleThemeChange}
+						>
+							{theme === "light" ? <LightMode /> : <DarkMode />}
+						</button>
+					</li>
 				</ul>
-				<button className="btn-hamburger btn btn-icon btn-primary">
-					<Menu onClick={() => handleChangeShowHamburgerMenu(true)} />
-				</button>
+
 				<div
 					className={`hamburger-menu ${
 						showHamburgerMenu
 							? "show-hamburger-menu"
 							: "close-hamburger-menu"
-					} mx-auto p-2 flex-col flex-align-center flex-justify-between`}
+					} mx-auto p-2 flex-col flex-align-center flex-justify-center`}
 				>
-					<button className="btn btn-icon btn-primary px-0-5 py-0-25">
+					<button className="btn btn-icon btn-close-icon btn-primary px-0-5 py-0-25">
 						<Close
 							onClick={() => handleChangeShowHamburgerMenu(false)}
 						/>
 					</button>
 					<ul className="list list-stacked mx-auto list-style-none navbar-navlinks text-center">
-						<li className="list-item p-0-5">
-							<button
-								className="btn btn-secondary btn-icon btn-theme p-0-25 mx-auto"
-								onClick={handleThemeChange}
-							>
-								{theme === "light" ? (
-									<LightMode />
-								) : (
-									<DarkMode />
-								)}
-							</button>
+						<li className="link list-item p-1">
+							<NavLink to="/" className="text-reg flex-row flex-align-center flex-justify-center mx-auto">
+								<HomeOutlined /> Home
+							</NavLink>
 						</li>
 						<li className="link list-item p-1">
-							<NavLink to="/">Home</NavLink>
+							<NavLink to="/explore" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+								<ExploreOutlined /> Explore
+							</NavLink>
 						</li>
-						<li className="link list-item p-1">
-							<NavLink to="/explore">Explore</NavLink>
+                        <li className="link list-item p-1">
+							<NavLink to="/playlist" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+								<VideoLibraryOutlined /> Playlist
+							</NavLink>
+						</li>
+                        <li className="link list-item p-1">
+							<NavLink to="/liked" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+								<FavoriteBorderOutlined /> Liked
+							</NavLink>
+						</li>
+                        <li className="link list-item p-1">
+							<NavLink to="/watchlater" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+								<WatchLaterOutlined /> Watch Later
+							</NavLink>
+						</li>
+                        <li className="link list-item p-1">
+							<NavLink to="/history" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+								<HistoryOutlined /> History
+							</NavLink>
 						</li>
 					</ul>
-					<button className="btn btn-primary px-0-5 py-0-25">
-						Login
-					</button>
 				</div>
 			</div>
+			<form className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between">
+				<input
+					type="text"
+					id="input-inline-name"
+					className="input-text text-sm"
+					placeholder="Enter search text..."
+					required
+				/>
+				<button type="submit" className="btn btn-icon text-sm">
+					<span className="icon">
+						<Search />
+					</span>
+				</button>
+			</form>
 		</nav>
 	);
 };
