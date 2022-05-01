@@ -13,7 +13,7 @@
 	background-color: var(--dark-theme-navbar-bg-color);
 }
 
-.navbar .container {
+.navbar .navbar-wrapper {
     width: 100%;
 }
 
@@ -127,7 +127,6 @@
     width: 100%;
     border-bottom: 2px solid var(--light-theme-bg-color);
 }
-
 
 .hamburger-menu .list-item:first-child {
     border-top: 2px solid var(--light-theme-bg-color);
