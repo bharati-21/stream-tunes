@@ -5,7 +5,6 @@
 	top: 0;
 	left: 0;
 	z-index: 5;
-    width: 100%;
     gap: var(--space-0-5);
     padding: var(--space-1);
 }
@@ -45,6 +44,10 @@
 }
 
 .navbar-navlinks .link:hover {
+	color: inherit;
+}
+
+.navbar-navlinks .link a:hover {
 	color: var(--primary-color);
 }
 
@@ -79,11 +82,11 @@
     text-align: center;
     z-index: 6;
     padding: var(--space-2) var(--space-1);
-    transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    -webkit-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    -moz-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    -ms-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    -o-transition: transform 0.7s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    -webkit-transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    -moz-transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    -ms-transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    -o-transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
 .show-hamburger-menu {
@@ -95,11 +98,11 @@
 }
 
 .close-hamburger-menu {
-    transform: translateX(-1000%);
-    -webkit-transform: translateX(-1000%);
-    -moz-transform: translateX(-1000%);
-    -ms-transform: translateX(-1000%);
-    -o-transform: translateX(-1000%);
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
 }
 
 .App.light .hamburger-menu {
@@ -235,12 +238,12 @@
 	}
 
     .hamburger-menu {
-        transform: translateX(1000%);
-        -webkit-transform: translateX(1000%);
-        -moz-transform: translateX(1000%);
-        -ms-transform: translateX(1000%);
-        -o-transform: translateX(1000%);
-    }
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+}
 
 	.navbar .navlink {
 		display: flex;

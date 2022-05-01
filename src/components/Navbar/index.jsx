@@ -90,12 +90,12 @@ const Navbar = () => {
 
 				<ul className="list list-inline flex-row flex-align-center flex-justify-end navbar-navlinks navbar-right-menu">
 					<li className="link navlink">
-						<NavLink to="/" className="text-sm px-0-25">
+						<NavLink to="/" className="text-sm mx-0-25">
 							Home
 						</NavLink>
 					</li>
 					<li className="link navlink">
-						<NavLink to="/explore" className="text-sm px-0-25">
+						<NavLink to="/explore" className="text-sm mx-0-25">
 							Explore
 						</NavLink>
 					</li>
@@ -140,7 +140,7 @@ const Navbar = () => {
 							onClick={() => handleChangeShowHamburgerMenu(false)}
 						/>
 					</button>
-					<ul className="list list-stacked mx-auto list-style-none navbar-navlinks text-center">
+					<ul className="list list-stacked mx-auto mt-2 list-style-none navbar-navlinks text-center">
 						<li className="link list-item p-1">
 							<NavLink
 								to="/"
