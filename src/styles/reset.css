@@ -45,3 +45,10 @@ a, i {
     -ms-border-radius: var(--br-2);
     -o-border-radius: var(--br-2);
 }
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
