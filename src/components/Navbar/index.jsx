@@ -7,12 +7,12 @@ import {
 	Search,
 	AccountCircle,
 	Logout,
-    HomeOutlined,
-    VideoLibraryOutlined,
-    ExploreOutlined,
-    FavoriteBorderOutlined,
-    WatchLaterOutlined,
-    HistoryOutlined,
+	HomeOutlined,
+	VideoLibraryOutlined,
+	ExploreOutlined,
+	FavoriteBorderOutlined,
+	WatchLaterOutlined,
+	HistoryOutlined,
 } from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
 
@@ -142,32 +142,50 @@ const Navbar = () => {
 					</button>
 					<ul className="list list-stacked mx-auto list-style-none navbar-navlinks text-center">
 						<li className="link list-item p-1">
-							<NavLink to="/" className="text-reg flex-row flex-align-center flex-justify-center mx-auto">
+							<NavLink
+								to="/"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto"
+							>
 								<HomeOutlined /> Home
 							</NavLink>
 						</li>
 						<li className="link list-item p-1">
-							<NavLink to="/explore" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+							<NavLink
+								to="/explore"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
+							>
 								<ExploreOutlined /> Explore
 							</NavLink>
 						</li>
-                        <li className="link list-item p-1">
-							<NavLink to="/playlist" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+						<li className="link list-item p-1">
+							<NavLink
+								to="/playlist"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
+							>
 								<VideoLibraryOutlined /> Playlist
 							</NavLink>
 						</li>
-                        <li className="link list-item p-1">
-							<NavLink to="/liked" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+						<li className="link list-item p-1">
+							<NavLink
+								to="/liked"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
+							>
 								<FavoriteBorderOutlined /> Liked
 							</NavLink>
 						</li>
-                        <li className="link list-item p-1">
-							<NavLink to="/watchlater" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+						<li className="link list-item p-1">
+							<NavLink
+								to="/watchlater"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
+							>
 								<WatchLaterOutlined /> Watch Later
 							</NavLink>
 						</li>
-                        <li className="link list-item p-1">
-							<NavLink to="/history" className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap">
+						<li className="link list-item p-1">
+							<NavLink
+								to="/history"
+								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
+							>
 								<HistoryOutlined /> History
 							</NavLink>
 						</li>
