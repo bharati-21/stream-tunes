@@ -60,8 +60,10 @@ const Login = () => {
 				"stream-tunes-user",
 				JSON.stringify(foundUser)
 			);
+
 			setFormData(initialFormData);
-			navigate(location?.state?.from ?? "/");
+			navigate(location?.state?.from ?? -1);
+            
 		} catch (error) {
 			showToast("Login Failed. Please try again later", "error");
 		}
