@@ -7,12 +7,6 @@ import {
 	Search,
 	AccountCircle,
 	Logout,
-	HomeOutlined,
-	VideoLibraryOutlined,
-	ExploreOutlined,
-	FavoriteBorderOutlined,
-	WatchLaterOutlined,
-	HistoryOutlined,
 } from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
 
@@ -21,13 +15,16 @@ import logo from "assets/logo/logo-img.png";
 
 import { useTheme, useAuth } from "contexts/";
 import { useToast } from "custom-hooks/useToast";
+import { useMappedSidebarRoutes } from "custom-hooks/useMappedSidebarRoutes";
 
 const Navbar = () => {
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
 	const { theme, setTheme } = useTheme();
 	const { isAuth, authDispatch } = useAuth();
+
 	const { showToast } = useToast();
+	const { mappedSidebarRoutes } = useMappedSidebarRoutes();
 
 	const handleThemeChange = () =>
 		setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -141,54 +138,7 @@ const Navbar = () => {
 						/>
 					</button>
 					<ul className="list list-stacked mx-auto mt-2 list-style-none navbar-navlinks text-center">
-						<li className="link list-item p-1">
-							<NavLink
-								to="/"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto"
-							>
-								<HomeOutlined /> Home
-							</NavLink>
-						</li>
-						<li className="link list-item p-1">
-							<NavLink
-								to="/explore"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
-							>
-								<ExploreOutlined /> Explore
-							</NavLink>
-						</li>
-						<li className="link list-item p-1">
-							<NavLink
-								to="/playlist"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
-							>
-								<VideoLibraryOutlined /> Playlist
-							</NavLink>
-						</li>
-						<li className="link list-item p-1">
-							<NavLink
-								to="/liked"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
-							>
-								<FavoriteBorderOutlined /> Liked
-							</NavLink>
-						</li>
-						<li className="link list-item p-1">
-							<NavLink
-								to="/watchlater"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
-							>
-								<WatchLaterOutlined /> Watch Later
-							</NavLink>
-						</li>
-						<li className="link list-item p-1">
-							<NavLink
-								to="/history"
-								className="text-reg flex-row flex-align-center flex-justify-center mx-auto flex-wrap"
-							>
-								<HistoryOutlined /> History
-							</NavLink>
-						</li>
+						{mappedSidebarRoutes}
 					</ul>
 				</div>
 			</div>
