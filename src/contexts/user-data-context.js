@@ -38,7 +38,7 @@ const UserDataProvider = ({ children }) => {
 					} = await getWatchLaterVideosService(authToken);
 					userDataDispatch({
 						type: "SET_WATCH_LATER",
-						payload: watchlater,
+						payload: { watchlater },
 					});
 					userDataDispatch({
 						type: "SET_LOADER_ERROR",
