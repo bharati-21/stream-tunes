@@ -1,10 +1,8 @@
 import React from "react";
 
 import { VideoCard } from "components";
-import { useVideos } from "contexts";
 
-const VideosList = () => {
-	const { videos } = useVideos();
+const VideosList = ({ videos }) => {
 
 	const videosMapping = videos.map(video => (
 		<VideoCard
