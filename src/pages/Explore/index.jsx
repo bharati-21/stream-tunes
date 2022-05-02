@@ -5,7 +5,7 @@ import "./explore.css";
 
 const Explore = () => {
 	const { categoriesLoading, categoriesError } = useCategories();
-	const { videosLoading, videosError } = useVideos();
+	const { videosLoading, videosError, videos } = useVideos();
     
 	return (
 		<main className="main explore-main">
@@ -18,7 +18,7 @@ const Explore = () => {
 			) : (
 				<div className="container flex-col flex-align-start flex-justify-start py-1-5 px-3">
 					<CategoryFiltersList />
-					<VideosList />
+					<VideosList videos={videos} />
 				</div>
 			)}
 		</main>
