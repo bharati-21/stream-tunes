@@ -8,7 +8,7 @@ import {
 	AccountCircle,
 	Logout,
 } from "@mui/icons-material";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 import "./navbar.css";
 import logo from "assets/logo/logo-img.png";
@@ -22,6 +22,7 @@ const Navbar = () => {
 
 	const { theme, setTheme } = useTheme();
 	const { isAuth, authDispatch } = useAuth();
+    const navigate = useNavigate();
 
 	const { showToast } = useToast();
     const { mappedSidebarRoutes } = useMappedSidebarRoutes();
@@ -37,6 +38,7 @@ const Navbar = () => {
 		showToast("Logged out successfully", "success");
 		localStorage.removeItem("stream-tunes-token");
 		localStorage.removeItem("stream-tunes-user");
+        navigate('/');
 	};
 
 	const handleChangeShowHamburgerMenu = (hamburgerMenuState) =>
