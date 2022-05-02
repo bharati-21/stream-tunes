@@ -103,6 +103,7 @@
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     -o-border-radius: 0;
+    gap: var(--space-0-25);
 }
 
 .video-options-list .btn {
@@ -113,6 +114,10 @@
 
 .video-options-icon:hover {
     background-color: var(--primary-bg-color);
+}
+
+svg.video-option-icon {
+    font-size: 1rem;
 }
 
 @media screen and (min-width: 480px) {
