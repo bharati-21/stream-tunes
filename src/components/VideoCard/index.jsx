@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { MoreVert } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
-import Hyphenated from 'react-hyphen';
+import Hyphenated from "react-hyphen";
+import { WatchLaterOutlined } from "@mui/icons-material";
 
 const VideoCard = ({ videoId, videoCreator, videoTitle }) => {
+	const [showVideoOptions, setShowVideoOptions] = useState(false);
+
 	const videoCreatorWords = videoCreator.split(/\s|-/, 3);
 	const videoCreatorAbbreviation = videoCreatorWords
 		.map((word) => word[0].toUpperCase())
 		.join("");
+
+	const handleShowOptionsChange = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+		setShowVideoOptions((prevShowVideoOptions) => !prevShowVideoOptions);
+	};
 
 	return (
 		<NavLink
@@ -26,13 +35,23 @@ const VideoCard = ({ videoId, videoCreator, videoTitle }) => {
 					{videoCreatorAbbreviation}
 				</div>
 				<h6 className="video-title text-center text-reg" lang="en">
-                    <Hyphenated>{videoTitle}</Hyphenated>
-                </h6>
+					<Hyphenated>{videoTitle}</Hyphenated>
+				</h6>
 				<div className="video-options-icon">
-					<button className="btn btn-icon btn-primary">
+					<button
+						className="btn btn-icon btn-primary br-2"
+						onClick={handleShowOptionsChange}
+					>
 						{<MoreVert />}
 					</button>
 				</div>
+				{showVideoOptions ? (
+					<div className="video-options-list br-2">
+						<button className="btn px-0-75 py-0-5 btn-text-icon">
+							<WatchLaterOutlined /> Watch Later
+						</button>
+					</div>
+				) : null}
 			</div>
 		</NavLink>
 	);
