@@ -6,12 +6,10 @@ import { useVideos } from "contexts";
 const VideosList = () => {
 	const { videos } = useVideos();
 
-	const videosMapping = videos.map(({ _id, creator, title }) => (
+	const videosMapping = videos.map(video => (
 		<VideoCard
-			key={_id}
-			videoId={_id}
-			videoCreator={creator}
-			videoTitle={title}
+			key={video._id}
+			video={video}
 		/>
 	));
 
