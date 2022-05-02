@@ -1,6 +1,7 @@
 import React from "react";
 import { MoreVert } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
+import Hyphenated from 'react-hyphen';
 
 const VideoCard = ({ videoId, videoCreator, videoTitle }) => {
 	const videoCreatorWords = videoCreator.split(/\s|-/, 3);
@@ -21,10 +22,12 @@ const VideoCard = ({ videoId, videoCreator, videoTitle }) => {
 				/>
 			</div>
 			<div className="card-body flex-row flex-align-start flex-justify-between py-0-75 px-0-5">
-				<div class="avatar avatar-xs avatar-text" role="img">
+				<div className="avatar avatar-xs avatar-text" role="img">
 					{videoCreatorAbbreviation}
 				</div>
-				<div className="video-title text-center">{videoTitle}</div>
+				<h6 className="video-title text-center text-reg" lang="en">
+                    <Hyphenated>{videoTitle}</Hyphenated>
+                </h6>
 				<div className="video-options-icon">
 					<button className="btn btn-icon btn-primary">
 						{<MoreVert />}

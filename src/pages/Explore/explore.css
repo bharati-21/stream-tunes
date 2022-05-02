@@ -54,6 +54,7 @@
     background-color: inherit;
     color: inherit;
     width: 100%;
+    gap: var(--space-1);
     flex: 1.5;
     border-radius: var(--br-2);
     -webkit-border-radius: var(--br-2);
