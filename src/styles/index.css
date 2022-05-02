@@ -28,3 +28,25 @@
 .border-bottom-primary {
     border-bottom: 2px solid var(--primary-color);
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+}
+
+.drawer-container {
+    display: none;
+    position: relative;
+    height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: 250px 1fr;
+    }
+
+    .drawer-container {
+        display: block;
+    }
+}

@@ -1,0 +1,36 @@
+.App.dark .aside-list {
+    background-color: var(--dark-theme-navbar-bg-color);
+}
+
+.App.light .aside-list {
+    background-color: var(--light-theme-navbar-bg-color);
+}
+
+.aside-list {
+    position: fixed;
+    top: var(--space-0-5);
+    bottom: 0;
+    width: 250px;
+    text-align: left;
+}
+
+.aside-list .list-item:hover {
+    color: var(--primary-color);
+}
+
+.App.dark .aside-list .list-item:hover,
+.App.dark .aside-list .list-item a.active {
+    background-color: #28282799;
+}
+
+.App.light .aside-list .list-item:hover,
+.App.light .aside-list .list-item a.active {
+    background-color: #E5E5E599;
+}
+
+.aside-list .list-item a {
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    gap: var(--space-1);
+}

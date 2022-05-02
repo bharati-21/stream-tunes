@@ -3,3 +3,7 @@ export { Navbar } from './Navbar/';
 export { CategoryList } from './Categories/CategoryList';
 export { Footer } from './Footer';
 export { Loader } from './Loader';
+export { CategoryFiltersList } from './CategoryFiltersList';
+export { Drawer } from './Drawer';
+export { VideosList } from './VideosList'
+export { VideoCard } from './VideoCard';
