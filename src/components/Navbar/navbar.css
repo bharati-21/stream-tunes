@@ -176,11 +176,6 @@
 
 .search-form {
     border: 1px solid var(--primary-color);
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
     padding: 5px;
     max-width: 200px;
     width: 100%;

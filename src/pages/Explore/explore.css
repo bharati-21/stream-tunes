@@ -27,11 +27,6 @@
 }
 
 .video-card {
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
     background-color: inherit;
     width: 100%;
     max-width: 100%;
@@ -42,24 +37,11 @@
     -o-transition: all 0.3s ease-in-out;
 }
 
-.card-header, .video-img {
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
-}
-
 .video-card .card-body {
     background-color: inherit;
     color: inherit;
     width: 100%;
     flex: 1.5;
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
 }
 
 .video-card .video-title {

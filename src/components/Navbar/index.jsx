@@ -192,7 +192,7 @@ const Navbar = () => {
 					</ul>
 				</div>
 			</div>
-			<form className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between">
+			<form className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between br-2">
 				<input
 					type="text"
 					id="input-inline-name"

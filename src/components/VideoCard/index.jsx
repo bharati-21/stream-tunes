@@ -11,16 +11,16 @@ const VideoCard = ({ videoId, videoCreator, videoTitle }) => {
 	return (
 		<NavLink
 			to={`/video/${videoId}`}
-			className="card card-vertical video-container video-card flex-col flex-align-center flex-justify-between"
+			className="card card-vertical video-container video-card flex-col flex-align-center flex-justify-between br-2"
 		>
-			<div className="card-header">
+			<div className="card-header br-2">
 				<img
 					src={`https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`}
 					alt={`${videoTitle} cover`}
-					className="video-img"
+					className="video-img br-2"
 				/>
 			</div>
-			<div className="card-body flex-row flex-align-start flex-justify-between py-0-75 px-0-5">
+			<div className="card-body br-2 flex-row flex-align-start flex-justify-between py-0-75 px-0-5">
 				<div class="avatar avatar-xs avatar-text" role="img">
 					{videoCreatorAbbreviation}
 				</div>
