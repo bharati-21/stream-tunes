@@ -11,7 +11,7 @@ const initialUserData = {
 	history: [],
 	playlists: [],
 	userDataLoading: true,
-	userDataError: null,
+	userDataError: { watchlater: '', history: '', playlists: '', liked: ''},
 };
 
 const UserDataContext = createContext(initialUserData);
@@ -28,8 +28,8 @@ const UserDataProvider = ({ children }) => {
 	useEffect(() => {
 		if (isAuth) {
 			userDataDispatch({
-				type: "SET_LOADER_ERROR",
-				payload: { error: null, loading: true },
+				type: "SET_LOADER",
+				payload: { loading: true },
 			});
 			(async () => {
 				try {
@@ -41,14 +41,14 @@ const UserDataProvider = ({ children }) => {
 						payload: { watchlater },
 					});
 					userDataDispatch({
-						type: "SET_LOADER_ERROR",
-						payload: { error: null, loading: false },
+						type: "SET_LOADER",
+						payload: { loading: false },
 					});
 				} catch (error) {
 					userDataDispatch({
-						type: "SET_LOADER_ERROR",
+						type: "SET_ERROR",
 						payload: {
-							error: "User data could not be fetched. Please try again later.",
+							error: { watchlater: "Watch later videos could not be fetched. Please try again later." },
 							loading: false,
 						},
 					});
