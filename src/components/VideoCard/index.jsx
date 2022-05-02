@@ -21,8 +21,6 @@ const VideoCard = ({ video }) => {
 	const navigate = useNavigate();
 	const { showToast } = useToast();
 
-	const videoInWatchLater = findVideoInList(watchlater, video);
-
 	const videoCreatorWords = videoCreator.split(/\s|-/, 3);
 	const videoCreatorAbbreviation = videoCreatorWords
 		.map((word) => word[0].toUpperCase())
@@ -43,17 +41,18 @@ const VideoCard = ({ video }) => {
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
 			userDataDispatch({
-				type: "SET_LOADER_ERROR",
-				payload: { loading: true, error: null },
+				type: "SET_LOADER",
+				payload: { loading: true },
 			});
-			if (videoInWatchLater) {
+			if (findVideoInList(watchlater, video)) {
 				try {
 					const {
 						data: { watchlater },
 					} = await deleteVideoFromWatchLaterService(
 						authToken,
-						video
+						videoId
 					);
+
 					userDataDispatch({
 						type: "SET_WATCH_LATER",
 						payload: { watchlater },
@@ -83,8 +82,8 @@ const VideoCard = ({ video }) => {
 				}
 			}
 			userDataDispatch({
-				type: "SET_LOADER_ERROR",
-				payload: { loading: false, error: "null" },
+				type: "SET_LOADER",
+				payload: { loading: false },
 			});
 		}
 	};
@@ -92,7 +91,7 @@ const VideoCard = ({ video }) => {
 	return (
 		<NavLink
 			to={`/video/${videoId}`}
-			className="card card-vertical video-container video-card flex-col flex-align-center flex-justify-between"
+			className={`card card-vertical video-container video-card flex-col flex-align-center flex-justify-between ${userDataLoading ? 'disabled-card': ''}`}
 		>
 			<div className="card-header">
 				<img
@@ -119,14 +118,14 @@ const VideoCard = ({ video }) => {
 				{showVideoOptions ? (
 					<div className="video-options-list br-2">
 						<button
-							className="btn px-0-75 py-0-5 btn-text-icon"
+							className={`${userDataLoading ? 'btn px-0-75 py-0-5 btn-text-icon  btn-disabled' : 'btn px-0-75 py-0-5 btn-text-icon'}`}
 							disabled={userDataLoading}
 							onClick={handleWatchLaterChange}
 						>
 							<WatchLaterOutlined className="video-option-icon" />{" "}
-							{videoInWatchLater
-								? "Add to watch later"
-								: "Remove from watch later"}
+							{findVideoInList(watchlater, video)
+								? "Remove from watch later"
+								: "Add to watch later"}
 						</button>
 					</div>
 				) : null}
