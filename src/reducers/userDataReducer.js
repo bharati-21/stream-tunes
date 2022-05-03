@@ -2,6 +2,7 @@ const actionType = {
 	SET_LOADER: "SET_LOADER",
 	SET_ERROR: "SET_ERROR",
 	SET_WATCH_LATER: "SET_WATCH_LATER",
+	SET_LIKES: "SET_LIKES",
 };
 
 const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
@@ -26,6 +27,12 @@ const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
 			return {
 				...prevUserDataState,
 				watchlater: payload.watchlater,
+			};
+
+		case actionType.SET_LIKES:
+			return {
+				...prevUserDataState,
+				likes: payload.likes,
 			};
 
 		default:
