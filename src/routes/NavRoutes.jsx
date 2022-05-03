@@ -2,7 +2,7 @@ import React from "react";
 import Mockman from "mockman-js";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import { Home, Explore, Login, Signup, WatchLater } from "pages";
+import { Home, Explore, Login, Signup, WatchLater, Likes } from "pages";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Drawer } from "components";
 
@@ -26,6 +26,7 @@ const NavRoutes = () => {
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/" element={<ProtectedRoutes />}>
                         <Route path="/watchlater" element={<WatchLater />} />
+                        <Route path="/likes" element={<Likes />} />
                     </Route>
 				</Routes>
 			</div>
