@@ -61,7 +61,6 @@
     color: inherit;
     width: 100%;
     gap: var(--space-1);
-    flex: 1.5;
     border-radius: var(--br-2);
     -webkit-border-radius: var(--br-2);
     -moz-border-radius: var(--br-2);
@@ -78,7 +77,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 110%;
+    top: 105%;
     z-index: 2;
     border: 1px solid var(--primary-color);
 }
@@ -107,6 +106,9 @@
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     -o-border-radius: 0;
+}
+
+.video-options-list .btn .text-icon-wrapper {
     gap: var(--space-0-25);
 }
 
