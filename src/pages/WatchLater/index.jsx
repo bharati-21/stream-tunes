@@ -27,13 +27,13 @@ const WatchLater = () => {
 						<VideosList videos={watchlater} />
 					) : (
 						<div className="py-3">
-							<h3 className="text-center mx-auto px-3 info-color">
+							<h5 className="text-center mx-auto px-3 info-color">
 								There are no videos to be watched later. Explore
 								videos to add to your watch later list!
-							</h3>
+							</h5>
 							<Link
 								to="/explore"
-								className="btn btn-primary mx-auto mt-2 px-0-75 text-lg py-0-5 text-center"
+								className="btn btn-primary mx-auto mt-2 px-1 text-reg py-0-5 text-center"
 							>
 								Explore now
 							</Link>
