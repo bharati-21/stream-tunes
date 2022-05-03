@@ -61,43 +61,34 @@ const VideoCard = ({ video }) => {
 				type: "SET_LOADER",
 				payload: { loading: true },
 			});
-			if (isVideoInWatchLater) {
-				try {
-					const {
-						data: { watchlater },
-					} = await deleteVideoFromWatchLaterService(
-						authToken,
-						videoId
-					);
 
-					userDataDispatch({
-						type: "SET_WATCH_LATER",
-						payload: { watchlater },
-					});
-					showToast("Removed video from watch later.", "success");
-				} catch (error) {
-					showToast(
-						"Failed to remove video to watch later. Please try again later.",
-						"error"
-					);
-				}
-			} else {
-				try {
-					const {
-						data: { watchlater },
-					} = await postVideoToWatchLaterService(authToken, video);
-					userDataDispatch({
-						type: "SET_WATCH_LATER",
-						payload: { watchlater },
-					});
-					showToast("Added video to watch later.", "success");
-				} catch (error) {
-					showToast(
-						"Failed to add video to watch later. Please try again later.",
-						"error"
-					);
-				}
+			try {
+				const {
+					data: { watchlater },
+				} = isVideoInWatchLater
+					? await deleteVideoFromWatchLaterService(authToken, videoId)
+					: await postVideoToWatchLaterService(authToken, video);
+
+				userDataDispatch({
+					type: "SET_WATCH_LATER",
+					payload: { watchlater },
+				});
+
+				showToast(
+					isVideoInWatchLater
+						? "Removed video from watch later."
+						: "Added video to watch later.",
+					"success"
+				);
+			} catch (error) {
+				showToast(
+					isVideoInWatchLater
+						? "Failed to remove video from watch later. Please try again later."
+						: "Failed to add video to watch later. Please try again later.",
+					"error"
+				);
 			}
+
 			userDataDispatch({
 				type: "SET_LOADER",
 				payload: { loading: false },
@@ -117,40 +108,33 @@ const VideoCard = ({ video }) => {
 				type: "SET_LOADER",
 				payload: { loading: true },
 			});
-			if (isVideoInLikes) {
-				try {
-					const {
-						data: { likes },
-					} = await deleteVideoFromLikesService(authToken, videoId);
+			try {
+				const {
+					data: { likes },
+				} = isVideoInLikes
+					? await deleteVideoFromLikesService(authToken, videoId)
+					: await postVideoToLikesService(authToken, video);
 
-					userDataDispatch({
-						type: "SET_LIKES",
-						payload: { likes },
-					});
-					showToast("Removed video from likes.", "success");
-				} catch (error) {
-					showToast(
-						"Failed to remove video from likes. Please try again later.",
-						"error"
-					);
-				}
-			} else {
-				try {
-					const {
-						data: { likes },
-					} = await postVideoToLikesService(authToken, video);
-					userDataDispatch({
-						type: "SET_LIKES",
-						payload: { likes },
-					});
-					showToast("Added video to likes.", "success");
-				} catch (error) {
-					showToast(
-						"Failed to add video to likes. Please try again later.",
-						"error"
-					);
-				}
+				userDataDispatch({
+					type: "SET_LIKES",
+					payload: { likes },
+				});
+
+				showToast(
+					isVideoInLikes
+						? "Removed video from likes."
+						: "Added video to likes",
+					"success"
+				);
+			} catch (error) {
+				showToast(
+					isVideoInLikes
+						? "Failed to remove video from likes. Please try again later."
+						: "Failed to add video to likes. Please try again later.",
+					"error"
+				);
 			}
+
 			userDataDispatch({
 				type: "SET_LOADER",
 				payload: { loading: false },
