@@ -7,3 +7,4 @@ export { CategoryFiltersList } from './CategoryFiltersList';
 export { Drawer } from './Drawer';
 export { VideosList } from './VideosList'
 export { VideoCard } from './VideoCard';
+export { PlaylistModal } from './PlaylistModal';
