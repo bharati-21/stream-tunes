@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 
 import { userDataReducerFunction } from "reducers";
-import { getWatchLaterVideosService, getLikedVideosService } from "services";
+import {
+	getWatchLaterVideosService,
+	getLikedVideosService,
+	getPlaylistVideosService,
+} from "services";
 import { useAuth } from "./auth-context";
-
 
 const initialUserData = {
 	userDetails: {},
@@ -11,7 +14,7 @@ const initialUserData = {
 	watchlater: [],
 	history: [],
 	playlists: [],
-	userDataLoading: true,
+	userDataLoading: false,
 	userDataError: { watchlater: "", history: "", playlists: "", likes: "" },
 };
 
@@ -79,6 +82,32 @@ const UserDataProvider = ({ children }) => {
 		}
 	};
 
+	const callGetPlaylistVideosService = async () => {
+		try {
+			const {
+				data: { playlists },
+			} = await getPlaylistVideosService(authToken);
+			userDataDispatch({
+				type: "SET_PLAYLISTS",
+				payload: { playlists },
+			});
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: false },
+			});
+		} catch (error) {
+			userDataDispatch({
+				type: "SET_ERROR",
+				payload: {
+					error: {
+						likes: "Playlists could not be fetched. Please try again later.",
+					},
+					loading: false,
+				},
+			});
+		}
+	};
+
 	useEffect(() => {
 		if (isAuth) {
 			userDataDispatch({
@@ -88,6 +117,7 @@ const UserDataProvider = ({ children }) => {
 
 			callGetWatchLaterVideosService();
 			callGetLikedVideosService();
+			callGetPlaylistVideosService();
 		}
 	}, [isAuth]);
 
