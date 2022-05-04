@@ -1,146 +1,191 @@
-.explore-main .container, .watch-later-main .container {
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-1)
+.explore-main .container,
+.watch-later-main .container,
+.playlists-main .container,
+.playlists-videos-list-main .container {
+	gap: var(--space-3);
+	padding: var(--space-3) var(--space-1);
 }
 
 .category-list {
-   gap: var(--space-1);
+	gap: var(--space-1);
 }
 
 .category-list .badge {
-    position: relative;
+	position: relative;
 }
 
 .videos-list-container {
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr;
-    gap: var(--space-3) var(--space-2);
+	display: grid;
+	width: 100%;
+	grid-template-columns: 1fr;
+	gap: var(--space-3) var(--space-2);
 }
 
 .App.dark .video-card:hover {
-    background-color: var(--dark-theme-navbar-bg-color);
+	background-color: var(--dark-theme-navbar-bg-color);
 }
 
 .App.light .video-card:hover {
-    background-color: var(--light-theme-navbar-bg-color);
+	background-color: var(--light-theme-navbar-bg-color);
 }
 
 .video-card {
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
-    background-color: inherit;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
+	border-radius: var(--br-2);
+	-webkit-border-radius: var(--br-2);
+	-moz-border-radius: var(--br-2);
+	-ms-border-radius: var(--br-2);
+	-o-border-radius: var(--br-2);
+	background-color: inherit;
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
 }
 
 .video-card.disabled-card {
-    pointer-events: none;
+	pointer-events: none;
 }
 
-.card-header, .video-img {
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
+.card-header,
+.video-img {
+	border-radius: var(--br-2);
+	-webkit-border-radius: var(--br-2);
+	-moz-border-radius: var(--br-2);
+	-ms-border-radius: var(--br-2);
+	-o-border-radius: var(--br-2);
 }
 
 .video-card .card-body {
-    justify-content: space-between;
-    background-color: inherit;
-    color: inherit;
-    width: 100%;
-    gap: var(--space-1);
-    border-radius: var(--br-2);
-    -webkit-border-radius: var(--br-2);
-    -moz-border-radius: var(--br-2);
-    -ms-border-radius: var(--br-2);
-    -o-border-radius: var(--br-2);
-    position: relative;
+	justify-content: space-between;
+	background-color: inherit;
+	color: inherit;
+	width: 100%;
+	gap: var(--space-1);
+	border-radius: var(--br-2);
+	-webkit-border-radius: var(--br-2);
+	-moz-border-radius: var(--br-2);
+	-ms-border-radius: var(--br-2);
+	-o-border-radius: var(--br-2);
+	position: relative;
 }
 
 .video-card .video-title {
-    flex: 1;
+	flex: 1;
 }
 
 .video-options-list {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 105%;
-    z-index: 2;
-    border: 1px solid var(--primary-color);
+	position: absolute;
+	left: 0.25rem;
+	right: 0.25rem;
+	top: 105%;
+	z-index: 2;
+	border: 1px solid var(--primary-color);
 }
 
 .video-options-list:last-child {
-    border-bottom: none;
-}
-
-.App.dark .video-options-list .btn {
-    background-color: var(--dark-theme-navbar-bg-color);
+	border-bottom: none;
 }
 
 .App.dark .video-options-list .btn.btn-text-icon:hover {
-    background-color: #181818;
+	background-color: #181818;
 }
 
 .App.light .video-options-list .btn.btn-text-icon:hover {
-    background-color: #F2F2F2;
-}
-
-.App.light .video-options-list .btn {
-    border-radius: 0;
-    border-bottom: 1px solid var(--primary-color);
-    background-color: var(--light-theme-navbar-bg-color);
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    -o-border-radius: 0;
-}
-
-.video-options-list .btn .text-icon-wrapper {
-    gap: var(--space-0-25);
+	background-color: #f2f2f2;
 }
 
 .video-options-list .btn {
-    width: 100%;
-    border: none;
-    color: inherit;
+	border-radius: 0;
+	width: 100%;
+	color: inherit;
+	border: none;
+	border-bottom: 1px solid var(--primary-color);
+}
+
+.App.dark .video-options-list .btn {
+	background-color: var(--dark-theme-navbar-bg-color);
+}
+
+.App.light .video-options-list .btn {
+	background-color: var(--light-theme-navbar-bg-color);
+}
+
+.video-options-list .btn .text-icon-wrapper {
+	gap: var(--space-0-25);
 }
 
 .video-options-icon:hover {
-    background-color: var(--primary-bg-color);
+	background-color: var(--primary-bg-color);
 }
 
 svg.video-option-icon {
-    font-size: 1rem;
+	font-size: 1rem;
+}
+
+/* Playlists */
+.playlist-card {
+    position: relative;
+}
+
+.playlist-card .card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 70%;
+    z-index: 3;
+   
+    background-color: rgba(0,0,0.6);
+}
+
+.playlist-title {
+    max-width: 70%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    line-height: 1.2;
+    color: var(--light-theme-navbar-bg-color);
+}
+
+.playlist-card .card-footer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 75%;
+    right: 0;
+    width: unset;
+    background-color: rgba(0,0,0.6);
+    text-align: center;
+    color: var(--light-theme-navbar-bg-color);
+    z-index: 3;
+}
+
+.btn-delete-playlist {
+    z-index: 3;
 }
 
 @media screen and (min-width: 480px) {
-    .videos-list-container {
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    }
+	.videos-list-container {
+		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+	}
 }
 
 @media screen and (min-width: 768px) {
-    .explore-main .container,
-    .watch-later-main .container {
-        padding: var(--space-3);
-    }
+	.explore-main .container,
+	.watch-later-main .container,
+    .playlists-main .container,
+    .playlists-videos-list-main .container {
+		padding: var(--space-3);
+	}
 }
 
 @media screen and (min-width: 2400px) {
-    .videos-list-container {
-        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    }
+	.videos-list-container {
+		grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+	}
 }
