@@ -128,45 +128,44 @@ svg.video-option-icon {
 
 /* Playlists */
 .playlist-card {
-    position: relative;
+	position: relative;
 }
 
 .playlist-card .card-body {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 70%;
-    z-index: 3;
-   
-    background-color: rgba(0,0,0.6);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 70%;
+	z-index: 3;
+	background-color: rgba(0, 0, 0.6);
 }
 
 .playlist-title {
-    max-width: 70%;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-    line-height: 1.2;
-    color: var(--light-theme-navbar-bg-color);
+	max-width: 70%;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	line-height: 1.2;
+	color: var(--light-theme-navbar-bg-color);
 }
 
 .playlist-card .card-footer {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 75%;
-    right: 0;
-    width: unset;
-    background-color: rgba(0,0,0.6);
-    text-align: center;
-    color: var(--light-theme-navbar-bg-color);
-    z-index: 3;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 75%;
+	right: 0;
+	width: unset;
+	background-color: rgba(0, 0, 0.6);
+	text-align: center;
+	color: var(--light-theme-navbar-bg-color);
+	z-index: 3;
 }
 
 .btn-delete-playlist {
-    z-index: 3;
+	z-index: 3;
 }
 
 @media screen and (min-width: 480px) {
@@ -178,8 +177,8 @@ svg.video-option-icon {
 @media screen and (min-width: 768px) {
 	.explore-main .container,
 	.watch-later-main .container,
-    .playlists-main .container,
-    .playlists-videos-list-main .container {
+	.playlists-main .container,
+	.playlists-videos-list-main .container {
 		padding: var(--space-3);
 	}
 }
