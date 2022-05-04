@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { DeleteOutline, MoreVert, ThumbUpOutlined } from "@mui/icons-material";
+import {
+	WatchLaterOutlined,
+	DeleteOutline,
+	MoreVert,
+	ThumbUpOutlined,
+} from "@mui/icons-material";
 import { NavLink, useNavigate } from "react-router-dom";
 import Hyphenated from "react-hyphen";
-import { WatchLaterOutlined } from "@mui/icons-material";
 
 import { useAuth, useUserData } from "contexts";
 import { useToast } from "custom-hooks/useToast";
@@ -13,6 +17,8 @@ import {
 	postVideoToWatchLaterService,
 } from "services";
 import { findVideoInList } from "utils";
+import { PlaylistModal } from "components";
+import PlaylistPortal from "PlaylistPortal";
 
 const VideoCard = ({ video }) => {
 	const { _id: videoId, creator: videoCreator, title: videoTitle } = video;
@@ -30,6 +36,7 @@ const VideoCard = ({ video }) => {
 	const [isVideoInLikes, setIsVideoInLikes] = useState(
 		findVideoInList(likes, video)
 	);
+	const [showPlaylistModal, setShowPlaylistModal] = useState(false);
 
 	useEffect(() => {
 		if (isAuth) {
@@ -142,86 +149,114 @@ const VideoCard = ({ video }) => {
 		}
 	};
 
+	const handleShowPlaylistModal = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if (!isAuth) {
+			showToast("Login to add the video to a playlist.", "info");
+			navigate("/login", { state: { from: "/explore" }, replace: true });
+		} else setShowPlaylistModal(true);
+	};
+
 	return (
-		<NavLink
-			to={`/video/${videoId}`}
-			className={`card card-vertical video-container video-card flex-col flex-align-center flex-justify-between ${
-				userDataLoading ? "disabled-card" : ""
-			}`}
-		>
-			<div className="card-header">
-				<img
-					src={`https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`}
-					alt={`${videoTitle} cover`}
-					className="video-img"
+		<>
+			{showPlaylistModal ? (
+				<PlaylistPortal
+					video={video}
+					setShowPlaylistModal={setShowPlaylistModal}
 				/>
-			</div>
-			<div className="card-body flex-row flex-align-start flex-justify-between py-0-75 px-0-5">
-				<div
-					className="video-creator avatar avatar-xs avatar-text"
-					role="img"
-				>
-					{videoCreatorAbbreviation}
+			) : null}
+			<NavLink
+				to={`/video/${videoId}`}
+				className={`card card-vertical video-container video-card flex-col flex-align-center flex-justify-between ${
+					userDataLoading ? "disabled-card" : ""
+				}`}
+			>
+				<div className="card-header">
+					<img
+						src={`https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`}
+						alt={`${videoTitle} cover`}
+						className="video-img"
+					/>
 				</div>
-				<h6 className="video-title text-center text-reg" lang="en">
-					<Hyphenated>{videoTitle}</Hyphenated>
-				</h6>
-				<div className="video-options-icon">
-					<button
-						className="btn btn-icon btn-primary br-2"
-						onClick={handleShowOptionsChange}
+				<div className="card-body flex-row flex-align-start flex-justify-between py-0-75 px-0-5">
+					<div
+						className="video-creator avatar avatar-xs avatar-text"
+						role="img"
 					>
-						{<MoreVert />}
-					</button>
-				</div>
-				{showVideoOptions ? (
-					<div className="video-options-list br-2">
+						{videoCreatorAbbreviation}
+					</div>
+					<h6 className="video-title text-center text-reg" lang="en">
+						<Hyphenated>{videoTitle}</Hyphenated>
+					</h6>
+					<div className="video-options-icon">
 						<button
-							className={`${
-								userDataLoading
-									? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
-									: "btn px-0-75 py-0-5 btn-text-icon"
-							}`}
-							disabled={userDataLoading}
-							onClick={handleWatchLaterChange}
+							className="btn btn-icon btn-primary br-2"
+							onClick={handleShowOptionsChange}
 						>
-							{isVideoInWatchLater ? (
-								<span className="text-icon-wrapper error-color flex-row flex-wrap flex-justify-center flex-align-center">
-									<DeleteOutline className="video-option-icon" />
-									Remove from watch later
-								</span>
-							) : (
-								<span className="text-icon-wrapper flex-row flex-wrap flex-justify-center flex-align-center">
-									<WatchLaterOutlined className="video-option-icon" />
-									Add to watch later
-								</span>
-							)}
-						</button>
-						<button
-							className={`${
-								userDataLoading
-									? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
-									: "btn px-0-75 py-0-5 btn-text-icon"
-							}`}
-							disabled={userDataLoading}
-							onClick={handleLikedVideoChange}
-						>
-							{isVideoInLikes ? (
-								<span className="text-icon-wrapper error-color flex-row flex-wrap flex-justify-center flex-align-center">
-									<DeleteOutline className="video-option-icon" />
-									Remove from likes
-								</span>
-							) : (
-								<span className="text-icon-wrapper flex-row flex-wrap flex-justify-center flex-align-center">
-									<ThumbUpOutlined className="video-option-icon" />
-									Add to likes
-								</span>
-							)}
+							{<MoreVert />}
 						</button>
 					</div>
-				) : null}
-			</div>
-		</NavLink>
+					{showVideoOptions ? (
+						<div className="video-options-list br-2">
+							<button
+								className={`${
+									userDataLoading
+										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
+										: "btn px-0-75 py-0-5 btn-text-icon"
+								}`}
+								disabled={userDataLoading}
+								onClick={handleWatchLaterChange}
+							>
+								{isVideoInWatchLater ? (
+									<span className="text-icon-wrapper error-color flex-row flex-wrap flex-justify-center flex-align-center">
+										<DeleteOutline className="video-option-icon" />
+										Remove from watch later
+									</span>
+								) : (
+									<span className="text-icon-wrapper flex-row flex-wrap flex-justify-center flex-align-center">
+										<WatchLaterOutlined className="video-option-icon" />
+										Add to watch later
+									</span>
+								)}
+							</button>
+							<button
+								className={`${
+									userDataLoading
+										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
+										: "btn px-0-75 py-0-5 btn-text-icon"
+								}`}
+								disabled={userDataLoading}
+								onClick={handleLikedVideoChange}
+							>
+								{isVideoInLikes ? (
+									<span className="text-icon-wrapper error-color flex-row flex-wrap flex-justify-center flex-align-center">
+										<DeleteOutline className="video-option-icon" />
+										Remove from likes
+									</span>
+								) : (
+									<span className="text-icon-wrapper flex-row flex-wrap flex-justify-center flex-align-center">
+										<ThumbUpOutlined className="video-option-icon" />
+										Add to likes
+									</span>
+								)}
+							</button>
+							<button
+								className={`${
+									userDataLoading
+										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
+										: "btn px-0-75 py-0-5 btn-text-icon"
+								}`}
+								disabled={userDataLoading}
+								onClick={handleShowPlaylistModal}
+							>
+								Add to playlist
+							</button>
+						</div>
+					) : null}
+				</div>
+			</NavLink>
+		</>
 	);
 };
 
