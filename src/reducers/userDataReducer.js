@@ -3,6 +3,8 @@ const actionType = {
 	SET_ERROR: "SET_ERROR",
 	SET_WATCH_LATER: "SET_WATCH_LATER",
 	SET_LIKES: "SET_LIKES",
+	SET_PLAYLISTS: "SET_PLAYLISTS",
+	UPDATE_PLAYLISTS: "UPDATE_PLAYLISTS",
 };
 
 const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
@@ -26,13 +28,29 @@ const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
 		case actionType.SET_WATCH_LATER:
 			return {
 				...prevUserDataState,
-				watchlater: payload.watchlater,
+				watchlater: [...payload.watchlater],
 			};
 
 		case actionType.SET_LIKES:
 			return {
 				...prevUserDataState,
-				likes: payload.likes,
+				likes: [...payload.likes],
+			};
+
+		case actionType.SET_PLAYLISTS:
+			return {
+				...prevUserDataState,
+				playlists: [...payload.playlists],
+			};
+
+		case actionType.UPDATE_PLAYLISTS:
+			return {
+				...prevUserDataState,
+				playlists: prevUserDataState.playlists.map((prevPlaylist) =>
+					prevPlaylist._id === payload.playlist._id
+						? { ...payload.playlist }
+						: { ...prevPlaylist }
+				),
 			};
 
 		default:
