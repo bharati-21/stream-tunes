@@ -28,6 +28,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 			});
 			userDataDispatch({ type: "SET_PLAYLISTS", payload: { playlists } });
 			setPlaylistName("");
+			showToast("Added video to new playlist.", "success");
 		} catch (error) {
 			showToast(
 				"Could not add video to new playlist. Please try again later.",
@@ -49,18 +50,18 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 					<Close />
 				</button>
 				<div className="playlist-options-container pb-1 flex-col flex-align-start flex-justify-center">
-                    <h6 className="playlist-options-head mr-1 text-reg">
-                        Add to an existing playlist
-                    </h6>
-					<div className="playlist-options">
-                    {playlists.map((playlist) => (
-						<PlaylistOption
-							key={playlist._id}
-							video={video}
-							playlist={playlist}
-						/>
-					))}
-                    </div>
+					<h6 className="playlist-options-head mr-1 text-reg">
+						Add to an existing playlist
+					</h6>
+					<div className="playlist-options flex-col flex-align-start flex-justify-center">
+						{playlists.map((playlist) => (
+							<PlaylistOption
+								key={playlist._id}
+								video={video}
+								playlist={playlist}
+							/>
+						))}
+					</div>
 				</div>
 				<form className="playlist-form br-2 flex-col flex-align-start flex-justify-center">
 					<h6 className="form-head text-reg">Create new playlist</h6>
