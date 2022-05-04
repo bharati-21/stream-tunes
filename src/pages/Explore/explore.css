@@ -168,6 +168,56 @@ svg.video-option-icon {
 	z-index: 3;
 }
 
+.video-options-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 110%;
+    z-index: 2;
+    border: 1px solid var(--primary-color);
+}
+
+.video-options-list:last-child {
+    border-bottom: none;
+}
+
+.App.dark .video-options-list .btn {
+    background-color: var(--dark-theme-navbar-bg-color);
+}
+
+.App.dark .video-options-list .btn.btn-text-icon:hover {
+    background-color: #181818;
+}
+
+.App.light .video-options-list .btn.btn-text-icon:hover {
+    background-color: #F2F2F2;
+}
+
+.App.light .video-options-list .btn {
+    border-radius: 0;
+    border-bottom: 1px solid var(--primary-color);
+    background-color: var(--light-theme-navbar-bg-color);
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    gap: var(--space-0-25);
+}
+
+.video-options-list .btn {
+    width: 100%;
+    border: none;
+    color: inherit;
+}
+
+.video-options-icon:hover {
+    background-color: var(--primary-bg-color);
+}
+
+svg.video-option-icon {
+    font-size: 1rem;
+}
+
 @media screen and (min-width: 480px) {
 	.videos-list-container {
 		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
