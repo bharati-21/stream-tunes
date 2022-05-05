@@ -11,13 +11,10 @@ import Hyphenated from "react-hyphen";
 import { useAuth, useUserData } from "contexts";
 import { useToast } from "custom-hooks/useToast";
 import {
-	deleteVideoFromLikesService,
-	deleteVideoFromWatchLaterService,
-	postVideoToLikesService,
-	postVideoToWatchLaterService,
-} from "services";
-import { findVideoInList, likeVideoServiceCall, watchLaterServiceCall } from "utils";
-import { PlaylistModal } from "components";
+	findVideoInList,
+	likeVideoServiceCall,
+	watchLaterServiceCall,
+} from "utils";
 import PlaylistPortal from "PlaylistPortal";
 
 const VideoCard = ({ video }) => {
@@ -64,7 +61,13 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to watch later.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			watchLaterServiceCall(showToast, userDataDispatch, isVideoInWatchLater, authToken, video);
+			watchLaterServiceCall(
+				showToast,
+				userDataDispatch,
+				isVideoInWatchLater,
+				authToken,
+				video
+			);
 		}
 	};
 
@@ -76,7 +79,13 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to likes.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			likeVideoServiceCall(showToast, userDataDispatch, isVideoInLikes, authToken, video);
+			likeVideoServiceCall(
+				showToast,
+				userDataDispatch,
+				isVideoInLikes,
+				authToken,
+				video
+			);
 		}
 	};
 
