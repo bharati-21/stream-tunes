@@ -2,7 +2,8 @@
 .watch-later-main .container,
 .playlists-main .container,
 .playlists-videos-list-main .container,
-.video-main .container {
+.video-main .container,
+.playlists-videos-list-main .container {
     height: 100%;
 	gap: var(--space-3);
 	padding: var(--space-3) var(--space-1);
@@ -140,7 +141,7 @@ svg.video-option-icon {
 	right: 0;
 	top: 70%;
 	z-index: 3;
-	background-color: rgba(0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 .playlist-title {
@@ -160,7 +161,7 @@ svg.video-option-icon {
 	left: 75%;
 	right: 0;
 	width: unset;
-	background-color: rgba(0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.6);
 	text-align: center;
 	color: var(--light-theme-navbar-bg-color);
 	z-index: 3;
@@ -326,4 +327,3 @@ svg.video-option-icon {
 		grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
 	}
 }
-

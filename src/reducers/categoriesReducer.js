@@ -1,11 +1,8 @@
-const actionType = {
-	INIT_CATEGORIES_SUCCESS: "INIT_CATEGORIES_SUCCESS",
-	INIT_CATEGORIES_ERROR: "INIT_CATEGORIES_ERROR",
-};
+import { categoriesActionTypes as actionTypes } from "../constants";
 
 const categoriesReducerFunction = (prevCategoriesState, { type, payload }) => {
 	switch (type) {
-		case actionType.INIT_CATEGORIES_SUCCESS:
+		case actionTypes.INIT_CATEGORIES_SUCCESS:
 			return {
 				...prevCategoriesState,
 				categories: payload.categories,
@@ -13,7 +10,7 @@ const categoriesReducerFunction = (prevCategoriesState, { type, payload }) => {
 				categoriesLoading: false,
 			};
 
-		case actionType.INIT_CATEGORIES_ERROR:
+		case actionTypes.INIT_CATEGORIES_ERROR:
 			return {
 				...prevCategoriesState,
 				categoriesError:

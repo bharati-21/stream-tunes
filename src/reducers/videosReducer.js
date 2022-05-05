@@ -1,11 +1,8 @@
-const actionType = {
-	INIT_VIDEOS_SUCCESS: "INIT_VIDEOS_SUCCESS",
-	INIT_VIDEOS_ERROR: "INIT_VIDEOS_ERROR",
-};
+import { videosActionTypes as actionTypes } from "../constants";
 
 const videosReducerFunction = (prevVideosState, { type, payload }) => {
 	switch (type) {
-		case actionType.INIT_VIDEOS_SUCCESS:
+		case actionTypes.INIT_VIDEOS_SUCCESS:
 			return {
 				...prevVideosState,
 				videos: payload.videos,
@@ -13,7 +10,7 @@ const videosReducerFunction = (prevVideosState, { type, payload }) => {
 				videosLoading: false,
 			};
 
-		case actionType.INIT_VIDEOS_ERROR:
+		case actionTypes.INIT_VIDEOS_ERROR:
 			return {
 				...prevVideosState,
 				videosError: "Videos could not load. Please try again later.",
