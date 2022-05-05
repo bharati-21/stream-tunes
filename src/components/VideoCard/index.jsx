@@ -16,7 +16,7 @@ import {
 	postVideoToLikesService,
 	postVideoToWatchLaterService,
 } from "services";
-import { findVideoInList } from "utils";
+import { findVideoInList, likeVideoServiceCall, watchLaterServiceCall } from "utils";
 import { PlaylistModal } from "components";
 import PlaylistPortal from "PlaylistPortal";
 
@@ -64,42 +64,7 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to watch later.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: true },
-			});
-
-			try {
-				const {
-					data: { watchlater },
-				} = isVideoInWatchLater
-					? await deleteVideoFromWatchLaterService(authToken, videoId)
-					: await postVideoToWatchLaterService(authToken, video);
-
-				userDataDispatch({
-					type: "SET_WATCH_LATER",
-					payload: { watchlater },
-				});
-
-				showToast(
-					isVideoInWatchLater
-						? "Removed video from watch later."
-						: "Added video to watch later.",
-					"success"
-				);
-			} catch (error) {
-				showToast(
-					isVideoInWatchLater
-						? "Failed to remove video from watch later. Please try again later."
-						: "Failed to add video to watch later. Please try again later.",
-					"error"
-				);
-			}
-
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: false },
-			});
+			watchLaterServiceCall(showToast, userDataDispatch, isVideoInWatchLater, authToken, video);
 		}
 	};
 
@@ -111,41 +76,7 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to likes.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: true },
-			});
-			try {
-				const {
-					data: { likes },
-				} = isVideoInLikes
-					? await deleteVideoFromLikesService(authToken, videoId)
-					: await postVideoToLikesService(authToken, video);
-
-				userDataDispatch({
-					type: "SET_LIKES",
-					payload: { likes },
-				});
-
-				showToast(
-					isVideoInLikes
-						? "Removed video from likes."
-						: "Added video to likes",
-					"success"
-				);
-			} catch (error) {
-				showToast(
-					isVideoInLikes
-						? "Failed to remove video from likes. Please try again later."
-						: "Failed to add video to likes. Please try again later.",
-					"error"
-				);
-			}
-
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: false },
-			});
+			likeVideoServiceCall(showToast, userDataDispatch, isVideoInLikes, authToken, video);
 		}
 	};
 
@@ -167,7 +98,7 @@ const VideoCard = ({ video }) => {
 				/>
 			) : null}
 			<NavLink
-				to={`/video/${videoId}`}
+				to={`/explore/${videoId}`}
 				className={`card card-vertical video-container video-card flex-col flex-align-center flex-justify-between ${
 					userDataLoading ? "disabled-card" : ""
 				}`}
