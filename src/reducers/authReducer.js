@@ -1,12 +1,9 @@
-const actionTypes = {
-	INIT_AUTH: "INIT_AUTH",
-	RESET_AUTH: "RESET_AUTH",
-};
+import { authActionTypes as actionTypes } from "../constants";
 
 const initialAuthState = {
 	isAuth: false,
 	authToken: "",
-	authLoading: true,
+	authLoading: false,
 	authError: null,
 	authUser: {},
 };

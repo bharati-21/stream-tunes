@@ -2,9 +2,9 @@ import {
 	HomeOutlined,
 	VideoLibraryOutlined,
 	ExploreOutlined,
-	FavoriteBorderOutlined,
 	WatchLaterOutlined,
 	HistoryOutlined,
+	ThumbUpOutlined,
 } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import { v4 as uuid } from "uuid";
@@ -30,9 +30,9 @@ const routes = [
 	},
 	{
 		id: uuid(),
-		route: "Liked",
-		path: "/liked",
-		icon: <FavoriteBorderOutlined />,
+		route: "Likes",
+		path: "/likes",
+		icon: <ThumbUpOutlined />,
 	},
 	{
 		id: uuid(),
@@ -60,7 +60,7 @@ const useMappedSidebarRoutes = () => {
 		</li>
 	));
 
-    return { mappedSidebarRoutes }
+	return { mappedSidebarRoutes };
 };
 
 export { useMappedSidebarRoutes };

@@ -1,35 +1,33 @@
-import React from "react";
-import "pages/Explore/explore.css";
-
+import { Loader, PlaylistsList } from "components";
 import { useUserData } from "contexts";
-import { Loader, VideosList } from "components";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const WatchLater = () => {
+const Playlists = () => {
 	const {
+		playlists,
 		userDataLoading,
-		userDataError: { watchlater: watchlaterError },
-		watchlater,
+		userDataError: { playlistsError },
 	} = useUserData();
 
 	return (
-		<main className="main watch-later-main">
-			{watchlaterError || watchlaterError ? (
+		<main className="main playlists-main">
+			{playlistsError ? (
 				<h3 className="text-center mx-auto px-3 error-color my-3">
-					Watch later videos could not be loaded. Please try again
+					Playlists videos could not be loaded. Please try again
 					later.
 				</h3>
-			) : userDataLoading || userDataLoading ? (
+			) : userDataLoading ? (
 				<Loader />
 			) : (
 				<div className="container flex-col flex-align-center flex-justify-start py-1-5 px-3">
-					{watchlater.length ? (
-						<VideosList videos={watchlater} />
+					{playlists.length ? (
+						<PlaylistsList />
 					) : (
 						<div className="py-3">
 							<h5 className="text-center mx-auto px-3 info-color">
-								There are no videos to be watched later. Explore
-								videos to add to your watch later list!
+								There are no playlists. Explore videos to create
+								and add videso to playlists!
 							</h5>
 							<Link
 								to="/explore"
@@ -45,4 +43,4 @@ const WatchLater = () => {
 	);
 };
 
-export { WatchLater };
+export { Playlists };
