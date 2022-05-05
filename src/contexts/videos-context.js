@@ -3,25 +3,25 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { videosReducerFunction } from "reducers";
 import { getVideos } from "services";
 
-const initialVidoes = {
-	vidoes: [],
-	vidoesError: null,
-	vidoesLoading: true,
-	vidoesSortOptions: null,
-	vidoeSelectedCategory: "",
-	videoSearchTest: "",
+const initialVideos = {
+	videos: [],
+	videosError: null,
+	videosLoading: true,
+	videosSortOption: null,
+	videosSelectedCategory: "",
+	videosSearchTest: "",
 };
-const VideosContext = createContext(initialVidoes);
+const VideosContext = createContext(initialVideos);
 
 const { Provider } = VideosContext;
 
 const VideosProvider = ({ children }) => {
-	const [vidoesState, videosDispatch] = useReducer(
+	const [videosState, videosDispatch] = useReducer(
 		videosReducerFunction,
-		initialVidoes
+		initialVideos
 	);
 
-	const getVidoesServiceCall = async () => {
+	const getVideosServiceCall = async () => {
 		try {
 			const {
 				data: { videos },
@@ -39,11 +39,11 @@ const VideosProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getVidoesServiceCall();
+		getVideosServiceCall();
 	}, []);
 
 	return (
-		<Provider value={{ ...vidoesState, videosDispatch }}>
+		<Provider value={{ ...videosState, videosDispatch }}>
 			{children}
 		</Provider>
 	);
