@@ -10,14 +10,14 @@ const videosReducerFunction = (prevVideosState, { type, payload }) => {
 				...prevVideosState,
 				videos: payload.videos,
 				videosError: null,
-				vidoesLoading: false,
+				videosLoading: false,
 			};
 
 		case actionType.INIT_VIDEOS_ERROR:
 			return {
 				...prevVideosState,
-				videosError: "Vidoes could not load. Please try again later.",
-				vidoesLoading: false,
+				videosError: "Videos could not load. Please try again later.",
+				videosLoading: false,
 			};
 
 		default:
