@@ -1,21 +1,14 @@
-const actionType = {
-	SET_LOADER: "SET_LOADER",
-	SET_ERROR: "SET_ERROR",
-	SET_WATCH_LATER: "SET_WATCH_LATER",
-	SET_LIKES: "SET_LIKES",
-	SET_PLAYLISTS: "SET_PLAYLISTS",
-	UPDATE_PLAYLISTS: "UPDATE_PLAYLISTS",
-};
+import { userDataActionTypes as actionTypes } from "../constants";
 
 const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
 	switch (type) {
-		case actionType.SET_LOADER:
+		case actionTypes.SET_LOADER:
 			return {
 				...prevUserDataState,
 				userDataLoading: payload.loading,
 			};
 
-		case actionType.SET_ERROR:
+		case actionTypes.SET_ERROR:
 			return {
 				...prevUserDataState,
 				userDataError: {
@@ -25,25 +18,25 @@ const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
 				userDataLoading: payload.loading,
 			};
 
-		case actionType.SET_WATCH_LATER:
+		case actionTypes.SET_WATCH_LATER:
 			return {
 				...prevUserDataState,
 				watchlater: [...payload.watchlater],
 			};
 
-		case actionType.SET_LIKES:
+		case actionTypes.SET_LIKES:
 			return {
 				...prevUserDataState,
 				likes: [...payload.likes],
 			};
 
-		case actionType.SET_PLAYLISTS:
+		case actionTypes.SET_PLAYLISTS:
 			return {
 				...prevUserDataState,
 				playlists: [...payload.playlists],
 			};
 
-		case actionType.UPDATE_PLAYLISTS:
+		case actionTypes.UPDATE_PLAYLISTS:
 			return {
 				...prevUserDataState,
 				playlists: prevUserDataState.playlists.map((prevPlaylist) =>
