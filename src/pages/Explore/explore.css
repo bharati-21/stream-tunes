@@ -1,7 +1,9 @@
 .explore-main .container,
 .watch-later-main .container,
 .playlists-main .container,
-.playlists-videos-list-main .container {
+.playlists-videos-list-main .container,
+.video-main .container {
+    height: 100%;
 	gap: var(--space-3);
 	padding: var(--space-3) var(--space-1);
 }
@@ -98,7 +100,7 @@
 	background-color: #f2f2f2;
 }
 
-.video-options-list .btn {
+.video-options-list .btn.btn {
 	border-radius: 0;
 	width: 100%;
 	color: inherit;
@@ -177,10 +179,6 @@ svg.video-option-icon {
     border: 1px solid var(--primary-color);
 }
 
-.video-options-list:last-child {
-    border-bottom: none;
-}
-
 .App.dark .video-options-list .btn {
     background-color: var(--dark-theme-navbar-bg-color);
 }
@@ -195,7 +193,6 @@ svg.video-option-icon {
 
 .App.light .video-options-list .btn {
     border-radius: 0;
-    border-bottom: 1px solid var(--primary-color);
     background-color: var(--light-theme-navbar-bg-color);
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -218,19 +215,110 @@ svg.video-option-icon {
     font-size: 1rem;
 }
 
+.youtube-video {
+    height: 100%;
+}
+
+.youtube-video iframe {
+    height: 100%;
+    width: 100%;
+    border-radius: var(--br-2);
+    -webkit-border-radius: var(--br-2);
+    -moz-border-radius: var(--br-2);
+    -ms-border-radius: var(--br-2);
+    -o-border-radius: var(--br-2);
+}
+
+.single-video-card {
+    max-width: 100%;
+    width: 100%;
+    color: var(--text-color);
+
+}  
+
+.single-video-card .card-header {
+    height: 30vh;
+    width: 100%;
+}
+
+.single-video-card .youtube-video {
+    width: 100%;
+}
+
+.single-video-card .card-body {
+    gap: var(--space-1-5);
+}
+
+.single-video-card .video-information {
+    width: 100%;
+    gap: var(--space-1);
+}
+
+.single-video-card .video-head {
+    word-wrap: break-word;
+    gap: var(--space-0-5);
+}
+
+.single-video-card .video-actions {
+    gap: var(--space-1);
+}
+
+.single-video-card .video-actions .btn {
+    gap: 0;
+}
+
+.single-video-card .video-creator {
+    gap: var(--space-0-5);
+}
+
 @media screen and (min-width: 480px) {
 	.videos-list-container {
 		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 	}
+
+    .single-video-card .card-header {
+        height: 50vh;
+    }
 }
 
 @media screen and (min-width: 768px) {
 	.explore-main .container,
 	.watch-later-main .container,
 	.playlists-main .container,
-	.playlists-videos-list-main .container {
+	.playlists-videos-list-main .container,
+    .video-main .container {
 		padding: var(--space-3);
-	}
+    }
+
+    .single-video-card .card-header {
+        height: 40vh;
+    }
+
+    .single-video-card {
+        max-width: 50rem;
+        width: 100%;
+    }  
+}
+
+@media  screen and (min-width: 960px){
+    .single-video-card .card-header {
+        height: 70vh;
+    }
+
+    .single-video-card {
+        max-width: 50rem;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .single-video-card .card-header {
+        height: 50vh;
+    }
+
+    .single-video-card {
+        width: 60rem;
+    }
 }
 
 @media screen and (min-width: 2400px) {
@@ -238,3 +326,4 @@ svg.video-option-icon {
 		grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
 	}
 }
+
