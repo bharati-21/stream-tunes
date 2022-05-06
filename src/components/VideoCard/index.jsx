@@ -13,6 +13,7 @@ import { useAuth, useUserData } from "contexts";
 import { useToast } from "custom-hooks/useToast";
 import {
 	findVideoInList,
+	getFormattedViews,
 	likeVideoServiceCall,
 	watchLaterServiceCall,
 } from "utils";
@@ -20,7 +21,13 @@ import PlaylistPortal from "PlaylistPortal";
 import { deleteVideoFromHistoryService } from "services";
 
 const VideoCard = ({ video }) => {
-	const { _id: videoId, creator: videoCreator, title: videoTitle } = video;
+	const {
+		_id: videoId,
+		creator: videoCreator,
+		title: videoTitle,
+		views,
+		dateAdded,
+	} = video;
 
 	const { isAuth, authToken } = useAuth();
 	const { userDataDispatch, watchlater, userDataLoading, likes } =
@@ -49,6 +56,12 @@ const VideoCard = ({ video }) => {
 	const videoCreatorAbbreviation = videoCreatorWords
 		.map((word) => word[0].toUpperCase())
 		.join("");
+
+	const dateReleased = new Date(dateAdded)
+		.toDateString()
+		.substring(4)
+		.split(" ", 4)
+		.join(" ");
 
 	const handleShowOptionsChange = (e) => {
 		e.stopPropagation();
@@ -153,9 +166,23 @@ const VideoCard = ({ video }) => {
 					>
 						{videoCreatorAbbreviation}
 					</div>
-					<h6 className="video-title text-center text-reg" lang="en">
-						<Hyphenated>{videoTitle}</Hyphenated>
-					</h6>
+					<div className="video-information-container flex-col">
+						<h6
+							className="video-title text-center text-reg"
+							lang="en"
+						>
+							<Hyphenated>{videoTitle}</Hyphenated>
+						</h6>
+						<div className="video-information flex-row flex-align-center flex-justify-center flex-wrap">
+							<div className="video-views text-xs">
+								{getFormattedViews(views)}
+							</div>
+							<div className="dot-separator">•</div>
+							<div className="video-views text-xs">
+								{dateReleased}
+							</div>
+						</div>
+					</div>
 					<div className="flex-row video-actions-container">
 						<div className="video-options-icon">
 							<button
