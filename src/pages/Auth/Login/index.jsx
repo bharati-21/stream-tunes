@@ -65,6 +65,7 @@ const Login = () => {
 			navigate(location?.state?.from ?? -1);
             
 		} catch (error) {
+            console.log(error)
 			showToast("Login Failed. Please try again later", "error");
 		}
 	};
