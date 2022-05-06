@@ -4,10 +4,15 @@ import { Footer, Navbar } from "components";
 import { useTheme } from "contexts/theme-context";
 import "styles/index.css";
 import { NavRoutes } from "routes/NavRoutes";
+import { useEffect } from "react";
 
 const App = () => {
 	const { theme } = useTheme();
 	const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [pathname])
 
 	return (
 		<div className={`App ${theme}`}>
