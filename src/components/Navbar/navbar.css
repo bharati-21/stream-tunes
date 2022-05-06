@@ -189,7 +189,8 @@
 .search-form .input-text {
     border: none;
     outline: none;
-    max-width: 85%;
+    width: 100%;
+    flex: 1 1;
     border-radius: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -205,7 +206,8 @@
 }
 
 .search-form .btn {
-    max-width: 5%;
+    max-width: 10%;
+    flex-shrink: 0;
 }
 
 .search-form .icon svg {

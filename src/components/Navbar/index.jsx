@@ -13,19 +13,20 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import logo from "assets/logo/logo-img.png";
 
-import { useTheme, useAuth } from "contexts/";
+import { useTheme, useAuth, useVideos } from "contexts/";
 import { useToast } from "custom-hooks/useToast";
-import { useMappedSidebarRoutes } from 'custom-hooks/useMappedSidebarRoutes';
+import { useMappedSidebarRoutes } from "custom-hooks/useMappedSidebarRoutes";
 
 const Navbar = () => {
 	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
 	const { theme, setTheme } = useTheme();
 	const { isAuth, authDispatch } = useAuth();
-    const navigate = useNavigate();
+	const { videosDispatch, videosSearchText: searchText } = useVideos();
+	const navigate = useNavigate();
 
 	const { showToast } = useToast();
-    const { mappedSidebarRoutes } = useMappedSidebarRoutes();
+	const { mappedSidebarRoutes } = useMappedSidebarRoutes();
 	const handleThemeChange = () =>
 		setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
 
@@ -38,11 +39,25 @@ const Navbar = () => {
 		showToast("Logged out successfully", "success");
 		localStorage.removeItem("stream-tunes-token");
 		localStorage.removeItem("stream-tunes-user");
-        navigate('/');
+		navigate("/");
 	};
 
 	const handleChangeShowHamburgerMenu = (hamburgerMenuState) =>
 		setShowHamburgerMenu(hamburgerMenuState);
+
+	const navigateToExplore = (event) => {
+		event.preventDefault();
+		if (searchText.trim() !== "" && location.pathName !== "/explore") {
+			navigate("/explore");
+		}
+	};
+
+	const handleChangeSearchText = (event) => {
+		videosDispatch({
+			type: "SET_SEARCH_TEXT",
+			payload: { videosSearchText: event.target.value },
+		});
+	};
 
 	return (
 		<nav className="navbar flex-col flex-align-center flex-justify-between py-1">
@@ -68,12 +83,17 @@ const Navbar = () => {
 						</h5>
 					</Link>
 				</div>
-				<form className="search-form desktop-search-form flex-row flex-align-center flex-justify-between">
+				<form
+					className="search-form desktop-search-form flex-row flex-align-center flex-justify-between"
+					onSubmit={navigateToExplore}
+				>
 					<input
-						type="text"
-						id="input-inline-name"
+						type="search"
+						id="input-desktop-search"
+						value={searchText}
 						className="input-text text-sm px-0-25"
 						placeholder="Enter search text..."
+						onChange={handleChangeSearchText}
 						required
 					/>
 					<button
@@ -139,19 +159,27 @@ const Navbar = () => {
 						/>
 					</button>
 					<ul className="list list-stacked mx-auto mt-2 list-style-none navbar-navlinks text-center">
-						{ mappedSidebarRoutes }
+						{mappedSidebarRoutes}
 					</ul>
 				</div>
 			</div>
-			<form className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between">
+			<form
+				className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between"
+				onSubmit={navigateToExplore}
+			>
 				<input
-					type="text"
-					id="input-inline-name"
+					type="search"
+					id="input-mobile-search"
 					className="input-text text-sm"
+					value={searchText}
+					onChange={handleChangeSearchText}
 					placeholder="Enter search text..."
 					required
 				/>
-				<button type="submit" className="btn btn-primary btn-icon text-sm">
+				<button
+					type="submit"
+					className="btn btn-primary btn-icon text-sm"
+				>
 					<span className="icon">
 						<Search />
 					</span>
