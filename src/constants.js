@@ -6,6 +6,7 @@ const authActionTypes = {
 const categoriesActionTypes = {
 	INIT_CATEGORIES_SUCCESS: "INIT_CATEGORIES_SUCCESS",
 	INIT_CATEGORIES_ERROR: "INIT_CATEGORIES_ERROR",
+    SET_SELECTED_CATEGORY: "SET_SELECTED_CATEGORY",
 };
 
 const userDataActionTypes = {
@@ -21,6 +22,9 @@ const userDataActionTypes = {
 const videosActionTypes = {
 	INIT_VIDEOS_SUCCESS: "INIT_VIDEOS_SUCCESS",
 	INIT_VIDEOS_ERROR: "INIT_VIDEOS_ERROR",
+    SET_LOADER: "SET_LOADER",
+    SET_SORTING_OPTION: "SET_SORTING_OPTION",
+    SET_SEARCH_TEXT: "SET_SEARCH_TEXT",
 };
 
 export {
