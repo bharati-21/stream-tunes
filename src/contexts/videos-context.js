@@ -8,8 +8,7 @@ const initialVideos = {
 	videosError: null,
 	videosLoading: true,
 	videosSortOption: null,
-	videosSelectedCategory: "",
-	videosSearchTest: "",
+	videosSearchText: "",
 };
 const VideosContext = createContext(initialVideos);
 
