@@ -66,6 +66,7 @@ const Login = () => {
             
 		} catch (error) {
             console.log(error)
+            console.log(error.message)
 			showToast("Login Failed. Please try again later", "error");
 		}
 	};
