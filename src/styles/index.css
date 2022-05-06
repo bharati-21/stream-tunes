@@ -35,6 +35,10 @@
     min-height: 100vh;
 }
 
+.main {
+    height: 100%;
+}
+
 .drawer-container {
     display: none;
     position: relative;
