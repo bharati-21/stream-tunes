@@ -5,6 +5,7 @@ import {
 	getWatchLaterVideosService,
 	getLikedVideosService,
 	getPlaylistVideosService,
+	getHistoryVideos,
 } from "services";
 import { useAuth } from "./auth-context";
 
@@ -108,6 +109,32 @@ const UserDataProvider = ({ children }) => {
 		}
 	};
 
+	const callGetHistoryVideosService = async () => {
+		try {
+			const {
+				data: { history },
+			} = await getHistoryVideos(authToken);
+			userDataDispatch({
+				type: "SET_HISTORY",
+				payload: { history },
+			});
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: false },
+			});
+		} catch (error) {
+			userDataDispatch({
+				type: "SET_ERROR",
+				payload: {
+					history: {
+						likes: "Videos in history could not be fetched. Please try again later.",
+					},
+					loading: false,
+				},
+			});
+		}
+	};
+
 	useEffect(() => {
 		if (isAuth) {
 			userDataDispatch({
@@ -118,6 +145,7 @@ const UserDataProvider = ({ children }) => {
 			callGetWatchLaterVideosService();
 			callGetLikedVideosService();
 			callGetPlaylistVideosService();
+			callGetHistoryVideosService();
 		}
 	}, [isAuth]);
 
