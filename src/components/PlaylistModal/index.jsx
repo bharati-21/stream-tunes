@@ -10,15 +10,27 @@ import { PlaylistOption } from "./PlaylistOption";
 const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 	const { theme } = useTheme();
 	const { authToken } = useAuth();
-	const { userDataDispatch, playlists } = useUserData();
+	const { userDataDispatch, playlists, userDataLoading } = useUserData();
 	const { showToast } = useToast();
 
 	const [playlistName, setPlaylistName] = useState("");
+	const [errorMessage, setErrorMessage] = useState(null);
 
-	const handlePlaylistNameChange = (e) => setPlaylistName(e.target.value);
+	const handlePlaylistNameChange = (e) => {
+		setErrorMessage(null);
+		setPlaylistName(e.target.value);
+	};
 
 	const handleCreatePlaylist = async (e) => {
 		e.preventDefault();
+		if (!playlistName) {
+			return setErrorMessage("Playlist name cannot be empty!");
+		}
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: true },
+		});
+
 		try {
 			const {
 				data: { playlists },
@@ -35,7 +47,14 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 				"error"
 			);
 		}
+
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: false },
+		});
 	};
+
+    const buttonDisabled = userDataLoading ? "btn-disabled" : "";
 
 	return (
 		<main
@@ -43,7 +62,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 		>
 			<div className="playlist-management-container p-1-5 flex-col flex-align-center flex-justify-center">
 				<button
-					className="btn btn-primary btn-icon btn-close-modal"
+					className={`btn btn-primary btn-icon btn-close-modal ${buttonDisabled}`}
 					type="button"
 					onClick={(e) => setShowPlaylistModal(false)}
 				>
@@ -78,12 +97,15 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 						/>
 						<button
 							type="submit"
-							className="btn btn-primary btn-create-playlist"
+							className={`btn btn-primary btn-create-playlist ${buttonDisabled}`}
 							onClick={handleCreatePlaylist}
 						>
 							<Add />
 						</button>
 					</div>
+					{errorMessage ? (
+						<p className="error-color text-sm">{errorMessage}</p>
+					) : null}
 				</form>
 			</div>
 		</main>
