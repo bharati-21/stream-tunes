@@ -62,7 +62,6 @@ export const signupHandler = function (schema, request) {
 
 export const loginHandler = function (schema, request) {
   const { email, password } = JSON.parse(request.requestBody);
-  console.log(email, password);
   try {
     const foundUser = schema.users.findBy({ email });
     if (!foundUser) {
@@ -72,14 +71,12 @@ export const loginHandler = function (schema, request) {
         { errors: ["The email you entered is not Registered. Not Found error"] }
       );
     }
-    console.log(password, foundUser.password)
     if (password === foundUser.password) {
       const encodedToken = sign(
         { _id: foundUser._id, email },
         process.env.REACT_APP_JWT_SECRET
       );
       foundUser.password = undefined;
-      consolelog(foundUser)
       return new Response(200, {}, { foundUser, encodedToken });
     }
     return new Response(
