@@ -12,6 +12,7 @@ import {
 	Playlists,
 	PlaylistVideos,
 	SingleVideo,
+	History,
 } from "pages";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Drawer } from "components";
@@ -43,6 +44,7 @@ const NavRoutes = () => {
 							path="/playlists/:playlistsId"
 							element={<PlaylistVideos />}
 						/>
+						<Route path="/history/" element={<History />} />
 					</Route>
 				</Routes>
 			</div>
