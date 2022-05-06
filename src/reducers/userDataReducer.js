@@ -46,6 +46,12 @@ const userDataReducerFunction = (prevUserDataState, { type, payload }) => {
 				),
 			};
 
+        case actionTypes.SET_HISTORY:
+            return {
+                ...prevUserDataState,
+                history: [ ...payload.history ]
+            }
+
 		default:
 			throw new Error("Unknown action type.");
 	}
