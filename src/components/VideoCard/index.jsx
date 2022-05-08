@@ -4,8 +4,9 @@ import {
 	DeleteOutline,
 	MoreVert,
 	ThumbUpOutlined,
+	Delete,
 } from "@mui/icons-material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Hyphenated from "react-hyphen";
 
 import { useAuth, useUserData } from "contexts";
@@ -16,6 +17,7 @@ import {
 	watchLaterServiceCall,
 } from "utils";
 import PlaylistPortal from "PlaylistPortal";
+import { deleteVideoFromHistoryService } from "services";
 
 const VideoCard = ({ video }) => {
 	const { _id: videoId, creator: videoCreator, title: videoTitle } = video;
@@ -25,6 +27,7 @@ const VideoCard = ({ video }) => {
 		useUserData();
 	const navigate = useNavigate();
 	const { showToast } = useToast();
+	const location = useLocation();
 
 	const [showVideoOptions, setShowVideoOptions] = useState(false);
 	const [isVideoInWatchLater, setIsVideoInWatchLater] = useState(
@@ -98,6 +101,30 @@ const VideoCard = ({ video }) => {
 		} else setShowPlaylistModal(true);
 	};
 
+	const handleDeleteVideoFromHistory = async (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: true },
+		});
+
+		try {
+			const {
+				data: { history },
+			} = await deleteVideoFromHistoryService(authToken, videoId);
+			userDataDispatch({ type: "SET_HISTORY", payload: { history } });
+			showToast("Removed video from history.", "success");
+		} catch (error) {
+			showToast("Failed to remove video from history.", "error");
+		}
+
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: false },
+		});
+	};
+
 	return (
 		<>
 			{showPlaylistModal ? (
@@ -129,13 +156,23 @@ const VideoCard = ({ video }) => {
 					<h6 className="video-title text-center text-reg" lang="en">
 						<Hyphenated>{videoTitle}</Hyphenated>
 					</h6>
-					<div className="video-options-icon">
-						<button
-							className="btn btn-icon btn-primary br-2"
-							onClick={handleShowOptionsChange}
-						>
-							{<MoreVert />}
-						</button>
+					<div className="flex-row video-actions-container">
+						<div className="video-options-icon">
+							<button
+								className="btn btn-icon btn-primary br-2"
+								onClick={handleShowOptionsChange}
+							>
+								{<MoreVert />}
+							</button>
+						</div>
+						{location?.pathname === "/history" ? (
+							<button
+								className="btn btn-icon btn-primary br-2"
+								onClick={handleDeleteVideoFromHistory}
+							>
+								{<Delete />}
+							</button>
+						) : null}
 					</div>
 					{showVideoOptions ? (
 						<div className="video-options-list br-2">

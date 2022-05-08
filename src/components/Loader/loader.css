@@ -5,9 +5,7 @@
 
 .loader::before {
 	position: absolute;
-	transform: translateX(-50%);
     top: 0;
-	left: 50%;
 	content: "";
 	width: 5rem;
 	height: 5rem;
@@ -16,10 +14,6 @@
 	border-right-color: transparent;
 	animation: spin 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 	-webkit-animation: spin 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
-	-o-transform: translateX(-50%);
 }
 
 @keyframes spin {

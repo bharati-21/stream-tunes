@@ -13,3 +13,7 @@ export { postNewPlayList } from './postNewPlayList';
 export { deleteVideoFromPlaylistService } from './deleteVideoFromPlaylistService';
 export { postVideoToPlaylist } from './postVideoToPlaylist';
 export { deletePlaylistService } from './deletePlaylistService';
+export { getHistoryVideos } from './getHistoryVideos';
+export { postVideoToHistoryService } from './postVideoToHistoryService'; 
+export { clearVideosFromHistoryService } from './clearVideosFromHistoryService';
+export { deleteVideoFromHistoryService } from './deleteVideoFromHistoryService';

@@ -3,7 +3,8 @@
 .playlists-main .container,
 .playlists-videos-list-main .container,
 .video-main .container,
-.playlists-videos-list-main .container {
+.playlists-videos-list-main .container,
+.history-main .container {
     height: 100%;
 	gap: var(--space-3);
 	padding: var(--space-3) var(--space-1);
@@ -287,7 +288,8 @@ svg.video-option-icon {
 	.watch-later-main .container,
 	.playlists-main .container,
 	.playlists-videos-list-main .container,
-    .video-main .container {
+    .video-main .container,
+    .history-main .container  {
 		padding: var(--space-3);
     }
 

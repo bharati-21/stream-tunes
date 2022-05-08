@@ -7,9 +7,11 @@ import { useToast } from "custom-hooks/useToast";
 import { deletePlaylistService } from "services";
 
 const PlaylistsList = () => {
-	const { userDataDispatch, playlists } = useUserData();
+	const { userDataDispatch, playlists, categoriesLoading } = useUserData();
 	const { showToast } = useToast();
 	const { authToken } = useAuth();
+
+	const buttonDisabled = categoriesLoading ? "btn-disabled" : "";
 
 	const playlistsMapping = playlists.map((playlist) => {
 		const cardImage = playlist.videos[0]
@@ -19,6 +21,11 @@ const PlaylistsList = () => {
 		const handleDeletePlaylist = async (event, playlistId) => {
 			event.preventDefault();
 			event.stopPropagation();
+
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: true },
+			});
 
 			try {
 				const {
@@ -32,7 +39,13 @@ const PlaylistsList = () => {
 			} catch (error) {
 				showToast("Failed to delete playlist.", "error");
 			}
+
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: false },
+			});
 		};
+
 		return (
 			<NavLink
 				className="card card-vertical playlist-card video-card flex-col flex-align-center flex-justify-between card-overlay"
@@ -58,7 +71,7 @@ const PlaylistsList = () => {
 							: playlist.videos.length}
 					</h6>
 					<button
-						className="btn btn-icon btn-primary"
+						className={`btn btn-icon btn-primary ${buttonDisabled}`}
 						onClick={(e) => handleDeletePlaylist(e, playlist._id)}
 					>
 						<Delete />

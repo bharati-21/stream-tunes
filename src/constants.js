@@ -15,6 +15,7 @@ const userDataActionTypes = {
 	SET_LIKES: "SET_LIKES",
 	SET_PLAYLISTS: "SET_PLAYLISTS",
 	UPDATE_PLAYLISTS: "UPDATE_PLAYLISTS",
+    SET_HISTORY: "SET_HISTORY",
 };
 
 const videosActionTypes = {

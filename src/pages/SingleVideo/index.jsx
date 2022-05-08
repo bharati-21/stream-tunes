@@ -19,12 +19,14 @@ import {
 } from "utils";
 import { useToast } from "custom-hooks/useToast";
 import PlaylistPortal from "PlaylistPortal";
+import { postVideoToHistoryService } from "services";
 
 const SingleVideo = () => {
 	const { videosError, videosLoading, videos } = useVideos();
-	const { watchlater, likes, userDataDispatch } = useUserData();
+	const { watchlater, likes, userDataDispatch, userDataLoading } =
+		useUserData();
 	const { videoId } = useParams();
-	const { isAuth, authToken, authId } = useAuth();
+	const { isAuth, authToken } = useAuth();
 	const { showToast } = useToast();
 	const navigate = useNavigate();
 
@@ -51,6 +53,39 @@ const SingleVideo = () => {
 			setIsVideoInLikes(findVideoInList(likes, videoToBeDisplayed));
 		}
 	}, [watchlater, likes]);
+
+	useEffect(() => {
+		if (videoToBeDisplayed) postVideoToHistoryServiceCall();
+	}, [videoToBeDisplayed]);
+
+	const postVideoToHistoryServiceCall = async () => {
+		if (isAuth) {
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: true },
+			});
+
+			try {
+				const {
+					data: { history },
+				} = await postVideoToHistoryService(
+					authToken,
+					videoToBeDisplayed
+				);
+				userDataDispatch({ type: "SET_HISTORY", payload: { history } });
+			} catch (error) {
+				showToast(
+					"Some error occurred while updating history. Please try again later.",
+					"error"
+				);
+			}
+
+			userDataDispatch({
+				type: "SET_LOADER",
+				payload: { loading: false },
+			});
+		}
+	};
 
 	const handleWatchLaterChange = async (e) => {
 		e.stopPropagation();
@@ -108,9 +143,11 @@ const SingleVideo = () => {
 
 	const opts = {
 		playerVars: {
-			autoplay: 0,
+			autoplay: 1,
 		},
 	};
+
+	const disabledButton = userDataLoading ? "btn-disabled" : "";
 
 	return (
 		<>
@@ -159,7 +196,7 @@ const SingleVideo = () => {
 									</div>
 									<div className="video-actions flex-row flex-align-center flex-justify-center flex-wrap">
 										<button
-											className="btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary"
+											className={`btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary btn ${disabledButton}`}
 											onClick={handleLikedVideoChange}
 										>
 											{isVideoInLikes ? (
@@ -174,7 +211,7 @@ const SingleVideo = () => {
 											</span>
 										</button>
 										<button
-											className="btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary"
+											className={`btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary ${disabledButton}`}
 											onClick={handleShowPlaylistModal}
 										>
 											<PlaylistAdd />
@@ -183,7 +220,7 @@ const SingleVideo = () => {
 											</span>
 										</button>
 										<button
-											className="btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary"
+											className={`btn btn-icon flex-col flex-align-center flex-justify-center btn-like-dislike btn-primary ${disabledButton}`}
 											onClick={handleWatchLaterChange}
 										>
 											{isVideoInWatchLater ? (

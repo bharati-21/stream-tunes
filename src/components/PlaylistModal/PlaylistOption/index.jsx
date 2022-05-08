@@ -1,4 +1,6 @@
 import React from "react";
+import { Delete } from "@mui/icons-material";
+
 import { useAuth, useUserData } from "contexts";
 import {
 	deletePlaylistService,
@@ -6,10 +8,9 @@ import {
 	postVideoToPlaylist,
 } from "services";
 import { useToast } from "custom-hooks/useToast";
-import { Delete } from "@mui/icons-material";
 
 const PlaylistOption = ({ video, playlist }) => {
-	const { userDataDispatch } = useUserData();
+	const { userDataDispatch, userDataLoading } = useUserData();
 	const { showToast } = useToast();
 	const { authToken } = useAuth();
 
@@ -21,6 +22,11 @@ const PlaylistOption = ({ video, playlist }) => {
 			: true;
 
 	const handleChangePlaylist = async (e) => {
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: true },
+		});
+
 		try {
 			const {
 				data: { playlist: updatedPlaylist },
@@ -49,9 +55,19 @@ const PlaylistOption = ({ video, playlist }) => {
 				"error"
 			);
 		}
+
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: false },
+		});
 	};
 
 	const handleDeletePlaylist = async (e) => {
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: true },
+		});
+
 		try {
 			const {
 				data: { playlists },
@@ -64,7 +80,14 @@ const PlaylistOption = ({ video, playlist }) => {
 		} catch (error) {
 			showToast("Failed to delete playlist.", "error");
 		}
+
+		userDataDispatch({
+			type: "SET_LOADER",
+			payload: { loading: false },
+		});
 	};
+
+	const disabledButton = userDataLoading ? "btn-disabled" : "";
 
 	return (
 		<div className="playlist-option flex-row flex-align-start flex-justify-between">
@@ -81,11 +104,12 @@ const PlaylistOption = ({ video, playlist }) => {
 							id={playlist._id}
 							checked={isVideoInPlaylist}
 							onChange={handleChangePlaylist}
+							disabled={userDataLoading}
 						/>
 						<span className="label-text">{playlist.title}</span>
 					</label>
 					<button
-						className="btn btn-icon btn-primary btn-delete-playlist"
+						className={`btn btn-icon btn-primary btn-delete-playlist ${disabledButton}`}
 						onClick={handleDeletePlaylist}
 					>
 						<Delete />
