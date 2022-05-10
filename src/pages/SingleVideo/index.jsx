@@ -14,6 +14,7 @@ import { useAuth, useUserData, useVideos } from "contexts";
 import { Loader } from "components";
 import {
 	findVideoInList,
+	getFormattedViews,
 	likeVideoServiceCall,
 	watchLaterServiceCall,
 } from "utils";
@@ -149,6 +150,12 @@ const SingleVideo = () => {
 
 	const disabledButton = userDataLoading ? "btn-disabled" : "";
 
+	const dateReleased = new Date(videoToBeDisplayed?.dateAdded)
+		.toDateString()
+		.substring(4)
+		.split(" ", 4)
+		.join(" ");
+
 	return (
 		<>
 			{showPlaylistModal ? (
@@ -182,16 +189,31 @@ const SingleVideo = () => {
 												{videoToBeDisplayed.title}
 											</Hyphenated>
 										</h5>
-										<div className="video-creator flex-row flex-align-center flex-justify-start">
+										<div className="video-creator flex-row flex-align-start flex-justify-start">
 											<div
 												className="creator-avatar avatar avatar-xs text-reg avatar-text"
 												role="img"
 											>
 												{videoCreatorAbbreviation}
 											</div>
-											<h6 className="creator-name text-reg">
-												{videoToBeDisplayed.creator}
-											</h6>
+											<div className="flex-col video-creator-info flex-align-start">
+												<h6 className="creator-name text-reg">
+													{videoToBeDisplayed.creator}
+												</h6>
+												<div className="video-views-date flex-row flex-align-center flex-justify-center flex-wrap">
+													<div className="video-views text-xs">
+														{getFormattedViews(
+															videoToBeDisplayed.views
+														)}
+													</div>
+													<div className="dot-separator">
+														•
+													</div>
+													<div className="video-date text-xs">
+														{dateReleased}
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div className="video-actions flex-row flex-align-center flex-justify-center flex-wrap">

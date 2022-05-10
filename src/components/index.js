@@ -9,3 +9,4 @@ export { VideosList } from "./VideosList";
 export { VideoCard } from "./VideoCard";
 export { PlaylistModal } from "./PlaylistModal";
 export { PlaylistsList } from "./PlaylistsList";
+export { SortingOptionsList } from './SortingOptionsList';

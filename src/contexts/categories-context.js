@@ -7,6 +7,7 @@ const initialCategories = {
 	categories: [],
 	categoriesError: null,
 	categoriesLoading: true,
+    selectedCategory: "All"
 };
 const CategoriesContext = createContext(initialCategories);
 

@@ -18,6 +18,12 @@ const categoriesReducerFunction = (prevCategoriesState, { type, payload }) => {
 				categoriesLoading: false,
 			};
 
+		case actionTypes.SET_SELECTED_CATEGORY:
+			return {
+				...prevCategoriesState,
+				selectedCategory: payload.selectedCategory,
+			};
+
 		default:
 			throw new Error("Unknown action type.");
 	}
