@@ -13,6 +13,7 @@ import {
 	PlaylistVideos,
 	SingleVideo,
 	History,
+    NotFound,
 } from "pages";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Drawer } from "components";
@@ -36,6 +37,7 @@ const NavRoutes = () => {
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/explore/:videoId" element={<SingleVideo />} />
+                    <Route path="*" element={<NotFound />} />
 					<Route path="/" element={<ProtectedRoutes />}>
 						<Route path="/watchlater" element={<WatchLater />} />
 						<Route path="/likes" element={<Likes />} />
