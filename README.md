@@ -44,6 +44,9 @@
 <br />
 Visit <a href="https://stream-tunes.netlify.app/">Stream Tunes</a> and jam to your favorite tunes!
 
+   ![image](https://user-images.githubusercontent.com/51514137/170018954-cb79a868-3e0b-4550-bd8e-bd6560d3d708.png)
+
+
 <br />
 <br />
 <!-- FEATURES -->
@@ -67,6 +70,7 @@ UI consists of -
 - Authentication
   - Login Page
   - Sign up Page
+
 
 <br />
 <br />
