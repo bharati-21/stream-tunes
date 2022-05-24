@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useReducer, useState } from "react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -9,6 +9,7 @@ import { signupService } from "services/";
 import { useToast } from "custom-hooks/useToast";
 import { useAuth } from "contexts/";
 import "../auth.css";
+import { isFormDataValid } from "utils";
 
 const Signup = () => {
 	const initialFormData = {
@@ -19,9 +20,32 @@ const Signup = () => {
 		confirmPassword: "",
 	};
 
+	const initialErrorState = {
+		firstNameError: null,
+		lastNameError: null,
+		passwordError: null,
+		confirmPasswordError: null,
+	};
+
 	const [formData, setFormData] = useState(initialFormData);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [error, setError] = useState(null);
+
+	const errorReducer = (state, { type, payload: { error, errorValue } }) => {
+		console.log(type, error, errorValue);
+		switch (type) {
+			case "RESET_ERROR_STATES":
+				return { ...initialErrorState };
+			case "SET_ERROR":
+				return { ...state, [error]: errorValue };
+		}
+	};
+
+	const [formDataError, setFormDataError] = useReducer(
+		errorReducer,
+		initialErrorState
+	);
 
 	const navigate = useNavigate();
 
@@ -36,6 +60,15 @@ const Signup = () => {
 
 	const handleFormDataChange = (event) => {
 		const { name, value } = event.target;
+		if (formDataError[name + "Error"]) {
+			setFormDataError({
+				type: "SET_ERROR",
+				payload: { error: name + "Error", errorValue: null },
+			});
+		}
+		if (error) {
+			setError(null);
+		}
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
 	};
 
@@ -54,13 +87,22 @@ const Signup = () => {
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
-		if (confirmPassword !== password) {
-			showToast("Passwords do not match.", "error");
+
+		if (
+			!isFormDataValid(
+				firstName,
+				lastName,
+				password,
+				confirmPassword,
+				setFormDataError,
+				setError
+			)
+		) {
+			console.log("Hey");
 			return;
 		}
-		try {
-			showToast("Sign up successful!", "success");
 
+		try {
 			const { data } = await signupService(formData);
 			const { encodedToken, foundUser } = data;
 			authDispatch({
@@ -77,10 +119,14 @@ const Signup = () => {
 			);
 
 			setFormData(initialFormData);
+			showToast("Sign up successful!", "success");
 
 			navigate(-1);
 		} catch (error) {
-			showToast("Sign up failed. Please try again later.", "error");
+			if (error.message.includes("422")) {
+				showToast("Email already registered.", "error");
+			} else
+				showToast("Sign up failed. Please try again later.", "error");
 		}
 	};
 
@@ -90,6 +136,15 @@ const Signup = () => {
 		setShowConfirmPassword(
 			(prevShowConfirmPassword) => !prevShowConfirmPassword
 		);
+
+	const {
+		firstNameError,
+		lastNameError,
+		passwordError,
+		confirmPasswordError,
+	} = formDataError;
+
+	console.log(formDataError);
 
 	return (
 		<section className="auth-main flex-col flex-align-center flex-justify-center mx-auto py-2 px-3">
@@ -119,7 +174,11 @@ const Signup = () => {
 									required
 								/>
 							</label>
-							<span className="text-message mt-0-5"></span>
+							{firstNameError && (
+								<span className="my-0-25 error-color text-red-500 text-xs">
+									{firstNameError}
+								</span>
+							)}
 						</div>
 						<div className="input-group input-default mt-1-5 mx-auto">
 							<label
@@ -138,7 +197,11 @@ const Signup = () => {
 									required
 								/>
 							</label>
-							<span className="text-message mt-0-5"></span>
+							{lastNameError && (
+								<span className="error-color text-red-500 text-xs">
+									{lastNameError}
+								</span>
+							)}
 						</div>
 						<div className="input-group input-default mt-1-5 mx-auto">
 							<label
@@ -157,7 +220,6 @@ const Signup = () => {
 									required
 								/>
 							</label>
-							<span className="text-message mt-0-5"></span>
 						</div>
 						<div className="input-group input-default mt-1-5 mb-1 mx-auto">
 							<label
@@ -190,7 +252,11 @@ const Signup = () => {
 									</button>
 								</span>
 							</label>
-							<span className="text-message mt-0-5"></span>
+							{passwordError && (
+								<span className="error-color text-red-500 text-xs">
+									{passwordError}
+								</span>
+							)}
 						</div>
 						<div className="input-group input-default mt-1-5 mb-1 mx-auto">
 							<label
@@ -227,8 +293,15 @@ const Signup = () => {
 									</button>
 								</span>
 							</label>
-							<span className="text-message mt-0-5"></span>
+							{confirmPassword && (
+								<span className="error-color text-red-500 text-xs">
+									{confirmPasswordError}
+								</span>
+							)}
 						</div>
+						{error ? (
+							<div className="my-2 error-color">{error}</div>
+						) : null}
 						<div className="psd-mgmt-container mt-2 flex-row flex-align-center flex-justify-between flex-wrap">
 							<label
 								htmlFor="checkbox-remember"

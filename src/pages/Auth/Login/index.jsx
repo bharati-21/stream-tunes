@@ -47,7 +47,7 @@ const Login = () => {
 		event.preventDefault();
 		try {
 			const { data } = await loginService(formData);
-			showToast("Login successfull.", "success");
+
 			const { encodedToken, foundUser } = data;
 			authDispatch({
 				action: {
@@ -62,10 +62,12 @@ const Login = () => {
 			);
 
 			setFormData(initialFormData);
+			showToast("Login successfull.", "success");
 			navigate(location?.state?.from ?? -1);
-            
 		} catch (error) {
-			showToast("Login Failed. Please try again later", "error");
+			if (error.message.includes("404"))
+				showToast("Username not found!", "error");
+			else showToast("Login Failed. Please try again later", "error");
 		}
 	};
 
