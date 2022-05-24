@@ -6,7 +6,7 @@
   <br />
   Stream Tunes 
 </h1>
-<p align="center">by elixir designs</p>
+<p align="center"><a href="https://elixir-ui.netlify.app/">by elixir designs</a></p>
 <br />
 <h3 align="center">
     Stream and jam to your favorite tunes!
