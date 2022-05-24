@@ -23,7 +23,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 
 	const handleCreatePlaylist = async (e) => {
 		e.preventDefault();
-		if (!playlistName) {
+		if (!playlistName || !playlistName.trim()) {
 			return setErrorMessage("Playlist name cannot be empty!");
 		}
 		userDataDispatch({
