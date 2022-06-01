@@ -5,8 +5,7 @@ const useOutsideClick = (reference, handler) => {
 		if (
 			reference.current &&
 			(event.target === reference.current ||
-				reference.current.cont
-                ains(event.target))
+				reference.current.contains(event.target))
 		) {
 			return;
 		}
