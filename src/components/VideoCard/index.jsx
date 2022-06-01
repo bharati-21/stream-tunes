@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	WatchLaterOutlined,
 	DeleteOutline,
@@ -19,6 +19,7 @@ import {
 } from "utils";
 import PlaylistPortal from "PlaylistPortal";
 import { deleteVideoFromHistoryService } from "services";
+import { useOutsideClick } from "custom-hooks/useOutsideClick";
 
 const VideoCard = ({ video }) => {
 	const {
@@ -44,6 +45,7 @@ const VideoCard = ({ video }) => {
 		findVideoInList(likes, video)
 	);
 	const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+	const videoOptionsReference = useRef(null);
 
 	useEffect(() => {
 		if (isAuth) {
@@ -138,6 +140,8 @@ const VideoCard = ({ video }) => {
 		});
 	};
 
+	useOutsideClick(videoOptionsReference, () => setShowVideoOptions(false));
+
 	return (
 		<>
 			{showPlaylistModal ? (
@@ -202,7 +206,10 @@ const VideoCard = ({ video }) => {
 						) : null}
 					</div>
 					{showVideoOptions ? (
-						<div className="video-options-list br-2">
+						<div
+							className="video-options-list br-2"
+							ref={videoOptionsReference}
+						>
 							<button
 								className={`${
 									userDataLoading
