@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "pages/Explore/explore.css";
 
 import { useUserData } from "contexts";
 import { Loader, VideosList } from "components";
 import { Link } from "react-router-dom";
+import { useDocumentTitle } from "custom-hooks";
 
 const WatchLater = () => {
 	const {
@@ -11,6 +12,12 @@ const WatchLater = () => {
 		userDataError: { watchlater: watchlaterError },
 		watchlater,
 	} = useUserData();
+
+	const setDocumentTitle = useDocumentTitle();
+
+	useEffect(() => {
+		setDocumentTitle("StreamTunes | Watch Later");
+	}, []);
 
 	return (
 		<main className="main watch-later-main">

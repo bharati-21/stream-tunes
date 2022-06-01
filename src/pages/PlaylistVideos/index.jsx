@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Loader, VideosList } from "components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUserData } from "contexts";
+import { useDocumentTitle } from "custom-hooks";
 
 const PlaylistVideos = () => {
 	const { playlistsId } = useParams();
@@ -20,6 +21,9 @@ const PlaylistVideos = () => {
 	const videos = playlists.find(
 		(playlist) => playlist._id === playlistsId
 	)?.videos;
+
+	const setDocumentTitle = useDocumentTitle();
+	useEffect(() => setDocumentTitle("StreamTunes | Playlists"), []);
 
 	return (
 		<main className="main playlists-videos-list-main">
