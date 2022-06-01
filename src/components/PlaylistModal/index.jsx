@@ -19,7 +19,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 
 	const playlistModalReference = useRef(null);
 	const playlistInputReference = useRef(null);
-	const isVideoEmpty = !Object.keys(video).length;
+	const isVideoEmpty = !video || !Object.keys(video).length;
 
 	useEffect(() => {
 		if (playlistInputReference.current) {

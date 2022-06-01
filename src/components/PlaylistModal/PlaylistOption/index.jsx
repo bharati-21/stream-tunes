@@ -14,7 +14,10 @@ const PlaylistOption = ({ video, playlist }) => {
 	const { showToast } = useToast();
 	const { authToken } = useAuth();
 
+	const isVideoEmpty = !video || !Object.keys(video).length;
+
 	const isVideoInPlaylist =
+		!isVideoEmpty &&
 		playlist.videos.find(
 			(playlistVideo) => playlistVideo._id === video._id
 		) === undefined
@@ -97,15 +100,17 @@ const PlaylistOption = ({ video, playlist }) => {
 						key={playlist._id}
 						className="playlist-option text-sm flex-row flex-align-start flex-justify-start"
 					>
-						<input
-							className="text-sm mr-0-25"
-							type="checkbox"
-							name={`playlist-${playlist.title}`}
-							id={playlist._id}
-							checked={isVideoInPlaylist}
-							onChange={handleChangePlaylist}
-							disabled={userDataLoading}
-						/>
+						{isVideoEmpty ? null : (
+							<input
+								className="text-sm mr-0-25"
+								type="checkbox"
+								name={`playlist-${playlist.title}`}
+								id={playlist._id}
+								checked={isVideoInPlaylist}
+								onChange={handleChangePlaylist}
+								disabled={userDataLoading}
+							/>
+						)}
 						<span className="label-text">{playlist.title}</span>
 					</label>
 					<button
