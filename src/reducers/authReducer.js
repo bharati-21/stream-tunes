@@ -14,10 +14,15 @@ const authReducerFunction = (prevAuthState, { action: { type, payload } }) => {
 			return {
 				...prevAuthState,
 				isAuth: true,
-				authLoading: false,
 				authError: null,
 				authUser: payload.authUser,
 				authToken: payload.authToken,
+			};
+
+		case actionTypes.SET_AUTH_LOADING:
+			return {
+				...prevAuthState,
+				authLoading: payload.authLoading,
 			};
 
 		case actionTypes.RESET_AUTH:
