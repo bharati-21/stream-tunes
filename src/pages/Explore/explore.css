@@ -12,6 +12,7 @@
 
 .filters-sort-container {
     gap: var(--space-1-5);
+    width: 100%;
 }
 
 .category-list {
@@ -349,6 +350,17 @@ svg.video-option-icon {
 
 .single-video-card .video-creator {
     gap: var(--space-0-5);
+}
+
+.infinite-scroll-loader {
+    width: 100%;
+    grid-column: 1/-1;
+}
+
+.infinite-scroll-loader img {
+    width: 100px;
+    height: 100px;
+    margin: auto;
 }
 
 @media screen and (min-width: 480px) {
