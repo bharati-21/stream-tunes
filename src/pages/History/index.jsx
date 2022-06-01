@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth, useUserData } from "contexts";
@@ -6,6 +6,7 @@ import "../Explore/explore.css";
 import { Loader, VideosList } from "components";
 import { clearVideosFromHistoryService } from "services";
 import { useToast } from "custom-hooks/useToast";
+import { useDocumentTitle } from "custom-hooks";
 
 const History = () => {
 	const {
@@ -17,6 +18,9 @@ const History = () => {
 
 	const { authToken } = useAuth();
 	const { showToast } = useToast();
+
+	const setDocumentTitle = useDocumentTitle();
+	useEffect(() => setDocumentTitle("StreamTunes | History"), []);
 
 	const handleClearHistory = async (event) => {
 		userDataDispatch({
@@ -53,7 +57,7 @@ const History = () => {
 				<Loader />
 			) : (
 				<div className="container flex-col flex-align-center flex-justify-start py-1-5 px-3">
-					{history.length ? (
+					{history?.length ? (
 						<>
 							<button
 								onClick={handleClearHistory}
