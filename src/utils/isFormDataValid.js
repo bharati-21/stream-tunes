@@ -80,7 +80,7 @@ const isFormDataValid = (
 			payload: {
 				error: "passwordError",
 				errorValue:
-					"Invalid password. Password should only contain only letters and numbers.",
+					"Invalid password. Password should only contain at least one lowercase, uppercase, number and a special character.",
 			},
 		});
 		return false;
