@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { React, useEffect, useReducer, useState } from "react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -33,6 +33,8 @@ const Signup = () => {
 	const [isSigningUp, setIsSigningUp] = useState(false);
 	const [error, setError] = useState(null);
 
+	const location = useLocation();
+
 	const errorReducer = (state, { type, payload: { error, errorValue } }) => {
 		switch (type) {
 			case "RESET_ERROR_STATES":
@@ -55,7 +57,7 @@ const Signup = () => {
 	const setDocumentTitle = useDocumentTitle();
 	useEffect(() => {
 		if (isAuth) {
-			navigate(-1, { replace: true });
+			navigate(location?.state?.from ?? "/", { replace: true });
 		}
 		setDocumentTitle("StreamTunes | Signup");
 	}, []);
@@ -117,7 +119,7 @@ const Signup = () => {
 			setFormData(initialFormData);
 			showToast("Sign up successful!", "success");
 
-			navigate(-1);
+			navigate(location?.state?.from ?? "/", { replace: true });
 		} catch (error) {
 			setIsSigningUp(false);
 			if (error.message.includes("422")) {
