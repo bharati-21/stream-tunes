@@ -110,7 +110,7 @@ const isFormDataValid = (
 		return false;
 	}
 
-	if (password !== confirmPassword) {
+	if (password.trim() !== confirmPassword.trim()) {
 		setError("Passwords do not match");
 		return false;
 	}
