@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
 	DarkMode,
 	LightMode,
 	Menu,
 	Close,
-	Search,
-	AccountCircle,
 	Logout,
+	Login,
 } from "@mui/icons-material";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 
@@ -14,16 +13,22 @@ import "./navbar.css";
 import logo from "assets/logo/logo-img.png";
 
 import { useTheme, useAuth, useVideos } from "contexts/";
-import { useToast } from "custom-hooks/useToast";
-import { useMappedSidebarRoutes } from "custom-hooks/useMappedSidebarRoutes";
+import { useToast } from "custom-hooks";
+import {
+	useMappedSidebarRoutes,
+	useOutsideClick,
+} from "custom-hooks";
+import { SearchBar } from "./SearchBar";
 
 const Navbar = () => {
-	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
-
-	const { theme, setTheme } = useTheme();
+		const { theme, setTheme } = useTheme();
 	const { isAuth, authDispatch } = useAuth();
-	const { videosDispatch, videosSearchText: searchText } = useVideos();
 	const navigate = useNavigate();
+    const { videosSearchText } = useVideos();
+
+    const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+	const sidebarHamburgerMenuReference = useRef(null);
+    const [searchText, setSearchText] = useState(videosSearchText);
 
 	const { showToast } = useToast();
 	const { mappedSidebarRoutes } = useMappedSidebarRoutes();
@@ -39,25 +44,23 @@ const Navbar = () => {
 		showToast("Logged out successfully", "success");
 		localStorage.removeItem("stream-tunes-token");
 		localStorage.removeItem("stream-tunes-user");
-		navigate("/");
+		navigate("/login");
 	};
 
-	const handleChangeShowHamburgerMenu = (hamburgerMenuState) =>
+	const handleChangeShowHamburgerMenu = (e, hamburgerMenuState) => {
+		e.stopPropagation();
 		setShowHamburgerMenu(hamburgerMenuState);
+	};
 
-	const navigateToExplore = (event) => {
-		event.preventDefault();
-		if (searchText.trim() !== "" && location.pathName !== "/explore") {
-			navigate("/explore");
+	useOutsideClick(sidebarHamburgerMenuReference, () =>
+		setShowHamburgerMenu(false)
+	);
+
+	useEffect(() => {
+		if (showHamburgerMenu) {
+			setShowHamburgerMenu(false);
 		}
-	};
-
-	const handleChangeSearchText = (event) => {
-		videosDispatch({
-			type: "SET_SEARCH_TEXT",
-			payload: { videosSearchText: event.target.value },
-		});
-	};
+	}, [location?.pathname]);
 
 	return (
 		<nav className="navbar flex-col flex-align-center flex-justify-between py-1">
@@ -65,7 +68,9 @@ const Navbar = () => {
 				<div className="navbar-left-menu flex-row flex-align-center flex-justify-between">
 					<button className="btn-hamburger btn btn-icon btn-primary">
 						<Menu
-							onClick={() => handleChangeShowHamburgerMenu(true)}
+							onClick={(e) =>
+								handleChangeShowHamburgerMenu(e, true)
+							}
 						/>
 					</button>
 					<Link
@@ -83,28 +88,9 @@ const Navbar = () => {
 						</h5>
 					</Link>
 				</div>
-				<form
-					className="search-form desktop-search-form flex-row flex-align-center flex-justify-between"
-					onSubmit={navigateToExplore}
-				>
-					<input
-						type="search"
-						id="input-desktop-search"
-						value={searchText}
-						className="input-text text-sm px-0-25"
-						placeholder="Enter search text..."
-						onChange={handleChangeSearchText}
-						required
-					/>
-					<button
-						type="submit"
-						className="btn btn-primary btn-icon text-sm"
-					>
-						<span className="icon">
-							<Search />
-						</span>
-					</button>
-				</form>
+				<div className="desktop-search-form">
+					<SearchBar searchText={searchText} setSearchText={setSearchText} />
+				</div>
 
 				<ul className="list list-inline flex-row flex-align-center flex-justify-end navbar-navlinks navbar-right-menu">
 					<li className="link navlink">
@@ -132,7 +118,7 @@ const Navbar = () => {
 								to="/login"
 								className="btn btn-primary btn-icon btn-login text-sm"
 							>
-								<AccountCircle />
+								<Login />
 							</Link>
 						</li>
 					)}
@@ -152,10 +138,13 @@ const Navbar = () => {
 							? "show-hamburger-menu"
 							: "close-hamburger-menu"
 					} mx-auto p-2 flex-col flex-align-center flex-justify-center`}
+					ref={sidebarHamburgerMenuReference}
 				>
 					<button className="btn btn-icon btn-close-icon btn-primary px-0-5 py-0-25">
 						<Close
-							onClick={() => handleChangeShowHamburgerMenu(false)}
+							onClick={(e) =>
+								handleChangeShowHamburgerMenu(e, false)
+							}
 						/>
 					</button>
 					<ul className="list list-stacked mx-auto mt-2 list-style-none navbar-navlinks text-center">
@@ -163,28 +152,9 @@ const Navbar = () => {
 					</ul>
 				</div>
 			</div>
-			<form
-				className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between"
-				onSubmit={navigateToExplore}
-			>
-				<input
-					type="search"
-					id="input-mobile-search"
-					className="input-text text-sm"
-					value={searchText}
-					onChange={handleChangeSearchText}
-					placeholder="Enter search text..."
-					required
-				/>
-				<button
-					type="submit"
-					className="btn btn-primary btn-icon text-sm"
-				>
-					<span className="icon">
-						<Search />
-					</span>
-				</button>
-			</form>
+			<div className="mobile-search-form">
+				<SearchBar searchText={searchText} setSearchText={setSearchText} />
+			</div>
 		</nav>
 	);
 };

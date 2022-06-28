@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { React, useEffect, useReducer, useState } from "react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -6,7 +6,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { signupService } from "services/";
-import { useToast } from "custom-hooks/useToast";
+import { useToast, useDocumentTitle } from "custom-hooks";
 import { useAuth } from "contexts/";
 import "../auth.css";
 import { isFormDataValid } from "utils";
@@ -30,10 +30,12 @@ const Signup = () => {
 	const [formData, setFormData] = useState(initialFormData);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [isSigningUp, setIsSigningUp] = useState(false);
 	const [error, setError] = useState(null);
 
+	const location = useLocation();
+
 	const errorReducer = (state, { type, payload: { error, errorValue } }) => {
-		console.log(type, error, errorValue);
 		switch (type) {
 			case "RESET_ERROR_STATES":
 				return { ...initialErrorState };
@@ -52,10 +54,12 @@ const Signup = () => {
 	const { showToast } = useToast();
 	const { authDispatch, isAuth } = useAuth();
 
+	const setDocumentTitle = useDocumentTitle();
 	useEffect(() => {
 		if (isAuth) {
-			navigate(-1);
+			navigate(location?.state?.from ?? "/", { replace: true });
 		}
+		setDocumentTitle("StreamTunes | Signup");
 	}, []);
 
 	const handleFormDataChange = (event) => {
@@ -98,31 +102,26 @@ const Signup = () => {
 				setError
 			)
 		) {
-			console.log("Hey");
 			return;
 		}
+		setIsSigningUp(true);
 
 		try {
 			const { data } = await signupService(formData);
-			const { encodedToken, foundUser } = data;
+			const { encodedToken, createdUser } = data;
 			authDispatch({
 				action: {
 					type: "INIT_AUTH",
-					payload: { authUser: foundUser, authToken: encodedToken },
+					payload: { authUser: createdUser, authToken: encodedToken },
 				},
 			});
-
-			localStorage.setItem("stream-tunes-token", encodedToken);
-			localStorage.setItem(
-				"stream-tunes-user",
-				JSON.stringify(foundUser)
-			);
 
 			setFormData(initialFormData);
 			showToast("Sign up successful!", "success");
 
-			navigate(-1);
+			navigate(location?.state?.from ?? "/", { replace: true });
 		} catch (error) {
+			setIsSigningUp(false);
 			if (error.message.includes("422")) {
 				showToast("Email already registered.", "error");
 			} else
@@ -143,8 +142,6 @@ const Signup = () => {
 		passwordError,
 		confirmPasswordError,
 	} = formDataError;
-
-	console.log(formDataError);
 
 	return (
 		<section className="auth-main flex-col flex-align-center flex-justify-center mx-auto py-2 px-3">
@@ -169,6 +166,7 @@ const Signup = () => {
 									className="input-text text-sm px-0-75 py-0-25 mt-0-25"
 									placeholder="Jane"
 									name="firstName"
+									disabled={isSigningUp}
 									onChange={handleFormDataChange}
 									value={firstName}
 									required
@@ -192,6 +190,7 @@ const Signup = () => {
 									className="input-text text-sm px-0-75 py-0-25 mt-0-25"
 									placeholder="Doe"
 									name="lastName"
+									disabled={isSigningUp}
 									onChange={handleFormDataChange}
 									value={lastName}
 									required
@@ -215,6 +214,7 @@ const Signup = () => {
 									className="input-text text-sm px-0-75 py-0-25 mt-0-25"
 									placeholder="janedoe@example.com"
 									name="email"
+									disabled={isSigningUp}
 									onChange={handleFormDataChange}
 									value={email}
 									required
@@ -239,12 +239,14 @@ const Signup = () => {
 										name="password"
 										onChange={handleFormDataChange}
 										value={password}
+										disabled={isSigningUp}
 										required
 									/>
 									<button
 										type="button"
 										className={`btn btn-icon icon-show-psd`}
 										onClick={handleChangePasswordVisibility}
+										disabled={isSigningUp}
 									>
 										<span className="icon mui-icon">
 											{showPasswordIcon}
@@ -279,6 +281,7 @@ const Signup = () => {
 										onChange={handleFormDataChange}
 										value={confirmPassword}
 										required
+										disabled={isSigningUp}
 									/>
 									<button
 										type="button"
@@ -286,6 +289,7 @@ const Signup = () => {
 										onClick={
 											handleChangeConfirmPasswordVisibility
 										}
+										disabled={isSigningUp}
 									>
 										<span className="icon mui-icon">
 											{showConfirmPasswordIcon}
@@ -312,25 +316,28 @@ const Signup = () => {
 									className="input-checkbox text-reg"
 									id="checkbox-remember"
 									required
+									disabled={isSigningUp}
 								/>
 								I accept terms and conditions
 							</label>
-							<div className="btn btn-link btn-primary btn-forgot-psd text-sm display-none">
-								Forgot password?
-							</div>
 						</div>
 
 						<div className="auth-button-container mt-1 flex-col flex-align-center">
 							<input
 								type="submit"
 								value="Sign Up"
+								disabled={isSigningUp}
 								className={`btn btn-primary px-0-75 text-sm py-0-25 btn-full-width`}
 							/>
 							<Link
 								to="/login"
-								className={`btn btn-link btn-primary mt-0-75 text-sm btn-existing-account`}
+								className={`btn btn-primary mt-0-75 text-sm btn-existing-account ${
+									isSigningUp
+										? "btn-link link-disabked"
+										: "btn-link"
+								}`}
 							>
-								Already have an account? Login{" "}
+								Already have an account? Login
 								<span className="icon mui-icon icon-chevron-right">
 									<ChevronRightIcon />
 								</span>

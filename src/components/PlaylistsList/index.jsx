@@ -1,10 +1,11 @@
 import { useAuth, useUserData } from "contexts";
 import React from "react";
 import noThumbnail from "assets/images/no-thumbnail.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import { useToast } from "custom-hooks/useToast";
 import { deletePlaylistService } from "services";
+import { useState } from "react";
 
 const PlaylistsList = () => {
 	const { userDataDispatch, playlists, categoriesLoading } = useUserData();
@@ -13,19 +14,19 @@ const PlaylistsList = () => {
 
 	const buttonDisabled = categoriesLoading ? "btn-disabled" : "";
 
+	const [isOnGoingNetworkCall, setIsOnGoingNetworkCall] = useState(false);
+
 	const playlistsMapping = playlists.map((playlist) => {
 		const cardImage = playlist.videos[0]
 			? `https://i.ytimg.com/vi/${playlist.videos[0]._id}/mqdefault.jpg`
 			: noThumbnail;
 
-		const handleDeletePlaylist = async (event, playlistId) => {
-			event.preventDefault();
-			event.stopPropagation();
+		const handleDeletePlaylist = async (event) => {
 
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: true },
-			});
+			event.stopPropagation();
+            event.preventDefault();
+            const playlistId = playlist._id;
+			setIsOnGoingNetworkCall(true);
 
 			try {
 				const {
@@ -38,17 +39,15 @@ const PlaylistsList = () => {
 				showToast("Playlist deleted successfully.", "success");
 			} catch (error) {
 				showToast("Failed to delete playlist.", "error");
+                setIsOnGoingNetworkCall(false);
 			}
-
-			userDataDispatch({
-				type: "SET_LOADER",
-				payload: { loading: false },
-			});
 		};
 
 		return (
-			<NavLink
-				className="card card-vertical playlist-card video-card flex-col flex-align-center flex-justify-between card-overlay"
+			<Link
+				className={`card card-vertical playlist-card video-card flex-col flex-align-center flex-justify-between card-overlay ${
+					isOnGoingNetworkCall ? "link-disabled" : ""
+				}`}
 				key={playlist._id}
 				to={`/playlists/${playlist._id}`}
 			>
@@ -71,13 +70,14 @@ const PlaylistsList = () => {
 							: playlist.videos.length}
 					</h6>
 					<button
-						className={`btn btn-icon btn-primary ${buttonDisabled}`}
-						onClick={(e) => handleDeletePlaylist(e, playlist._id)}
+						className={`btn btn-icon btn-primary btn-delete-playlist ${buttonDisabled}`}
+						onClick={handleDeletePlaylist}
+						disabled={isOnGoingNetworkCall}
 					>
 						<Delete />
 					</button>
 				</div>
-			</NavLink>
+			</Link>
 		);
 	});
 

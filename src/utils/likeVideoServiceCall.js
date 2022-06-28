@@ -7,10 +7,6 @@ const likeVideoServiceCall = async (
     authToken,
     video
 ) => {
-	userDataDispatch({
-		type: "SET_LOADER",
-		payload: { loading: true },
-	});
 	try {
 		const {
 			data: { likes },
@@ -37,11 +33,6 @@ const likeVideoServiceCall = async (
 			"error"
 		);
 	}
-
-	userDataDispatch({
-		type: "SET_LOADER",
-		payload: { loading: false },
-	});
 };
 
 export { likeVideoServiceCall };

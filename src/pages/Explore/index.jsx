@@ -9,6 +9,7 @@ import {
 import { useCategories, useVideos } from "contexts";
 import "./explore.css";
 import { getFilteredSortedVideos } from "utils";
+import { useDocumentTitle } from "custom-hooks";
 
 const Explore = () => {
 	const { categoriesLoading, categoriesError, selectedCategory } =
@@ -29,27 +30,8 @@ const Explore = () => {
 		videosSortOption
 	);
 
-	useEffect(() => {
-		videosDispatch({
-			type: "SET_LOADER",
-			payload: { videosLoading: true },
-		});
-
-		const interval = setTimeout(() => {
-			videosDispatch({
-				type: "SET_LOADER",
-				payload: { videosLoading: false },
-			});
-		}, 1000);
-
-		return () => {
-			videosDispatch({
-				type: "SET_LOADER",
-				payload: { videosLoading: false },
-			});
-			clearInterval(interval);
-		};
-	}, [selectedCategory, videosSortOption]);
+	const setDocumentTitle = useDocumentTitle();
+	useEffect(() => setDocumentTitle("StreamTunes | Explore"), []);
 
 	return (
 		<main className="main explore-main">
@@ -65,12 +47,12 @@ const Explore = () => {
 						<CategoryFiltersList />
 						<SortingOptionsList />
 					</div>
-					{filteredSortedVideos.length ? (
+					{filteredSortedVideos?.length ? (
 						<h5>
-							{filteredSortedVideos.length > 1
+							{filteredSortedVideos?.length > 1
 								? "Videos"
 								: "Video"}
-							:{filteredSortedVideos.length}
+							: {filteredSortedVideos?.length}
 						</h5>
 					) : null}
 					<VideosList videos={filteredSortedVideos} />

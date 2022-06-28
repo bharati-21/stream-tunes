@@ -1,7 +1,9 @@
 .auth-main {
 	min-height: 90vh;
-	padding-left: var(--space-1-5);
-	padding-right: var(--space-1-5);
+	padding-left: 0;
+	padding-right: 0;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 .auth-container.logout-container .auth-head {
@@ -25,8 +27,8 @@
 	background-color: var(--bg-horizontal-card);
 	border-radius: var(--br-4);
 	max-width: 450px;
-	padding-left: var(--space-0-75);
-	padding-right: var(--space-0-75);
+	padding-left: 0;
+	padding-right: 0;
 	border: 2px solid var(--light-gray-color);
 }
 
@@ -130,5 +132,16 @@
 
 	.psd-mgmt-container {
 		justify-content: space-between;
+	}
+}
+
+@media screen and (min-width: 380px) {
+    .auth-container {
+        padding-left: var(--space-0-75);
+		padding-right: var(--space-0-75);
+    }
+	.auth-main {
+		padding-left: var(--space-1-5);
+		padding-right: var(--space-1-5);
 	}
 }

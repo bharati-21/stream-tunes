@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
 	WatchLaterOutlined,
 	DeleteOutline,
@@ -6,7 +6,7 @@ import {
 	ThumbUpOutlined,
 	Delete,
 } from "@mui/icons-material";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import Hyphenated from "react-hyphen";
 
 import { useAuth, useUserData } from "contexts";
@@ -18,9 +18,13 @@ import {
 	watchLaterServiceCall,
 } from "utils";
 import PlaylistPortal from "PlaylistPortal";
-import { deleteVideoFromHistoryService } from "services";
+import {
+	deleteVideoFromHistoryService,
+	deleteVideoFromPlaylistService,
+} from "services";
+import { useOutsideClick } from "custom-hooks/useOutsideClick";
 
-const VideoCard = ({ video }) => {
+const VideoCard = ({ video, page }) => {
 	const {
 		_id: videoId,
 		creator: videoCreator,
@@ -35,22 +39,16 @@ const VideoCard = ({ video }) => {
 	const navigate = useNavigate();
 	const { showToast } = useToast();
 	const location = useLocation();
+	const { playlistsId } = useParams();
 
 	const [showVideoOptions, setShowVideoOptions] = useState(false);
-	const [isVideoInWatchLater, setIsVideoInWatchLater] = useState(
-		findVideoInList(watchlater, video)
-	);
-	const [isVideoInLikes, setIsVideoInLikes] = useState(
-		findVideoInList(likes, video)
-	);
 	const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+	const [isOnGoingNetworkCall, setIsOnGoingNetworkCall] = useState(false);
 
-	useEffect(() => {
-		if (isAuth) {
-			setIsVideoInWatchLater(findVideoInList(watchlater, video));
-			setIsVideoInLikes(findVideoInList(likes, video));
-		}
-	}, [watchlater, likes]);
+	const isVideoInWatchLater = findVideoInList(watchlater, video);
+	const isVideoInLikes = findVideoInList(likes, video);
+
+	const videoOptionsReference = useRef(null);
 
 	const videoCreatorWords = videoCreator.split(/\s|-/, 3);
 	const videoCreatorAbbreviation = videoCreatorWords
@@ -77,13 +75,15 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to watch later.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			watchLaterServiceCall(
+			setIsOnGoingNetworkCall(true);
+			await watchLaterServiceCall(
 				showToast,
 				userDataDispatch,
 				isVideoInWatchLater,
 				authToken,
 				video
 			);
+			setIsOnGoingNetworkCall(false);
 		}
 	};
 
@@ -95,19 +95,22 @@ const VideoCard = ({ video }) => {
 			showToast("Login to add the video to likes.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
 		} else {
-			likeVideoServiceCall(
+			setIsOnGoingNetworkCall(true);
+			await likeVideoServiceCall(
 				showToast,
 				userDataDispatch,
 				isVideoInLikes,
 				authToken,
 				video
 			);
+			setIsOnGoingNetworkCall(false);
 		}
 	};
 
 	const handleShowPlaylistModal = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
+
 		if (!isAuth) {
 			showToast("Login to add the video to a playlist.", "info");
 			navigate("/login", { state: { from: "/explore" }, replace: true });
@@ -117,10 +120,8 @@ const VideoCard = ({ video }) => {
 	const handleDeleteVideoFromHistory = async (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		userDataDispatch({
-			type: "SET_LOADER",
-			payload: { loading: true },
-		});
+
+		setIsOnGoingNetworkCall(true);
 
 		try {
 			const {
@@ -132,11 +133,34 @@ const VideoCard = ({ video }) => {
 			showToast("Failed to remove video from history.", "error");
 		}
 
-		userDataDispatch({
-			type: "SET_LOADER",
-			payload: { loading: false },
-		});
+		setIsOnGoingNetworkCall(false);
 	};
+
+	const handleDeleteVideoFromPlaylist = async (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		setIsOnGoingNetworkCall(true);
+		try {
+			const {
+				data: { playlist: updatedPlaylist },
+			} = await deleteVideoFromPlaylistService(
+				authToken,
+				playlistsId,
+				videoId
+			);
+			userDataDispatch({
+				type: "UPDATE_PLAYLISTS",
+				payload: { playlist: updatedPlaylist },
+			});
+			showToast("Video removed from playlist.", "success");
+		} catch (error) {
+			setIsOnGoingNetworkCall(false);
+			showToast("Failed to remove video playlist.", "error");
+		}
+	};
+
+	useOutsideClick(videoOptionsReference, () => setShowVideoOptions(false));
 
 	return (
 		<>
@@ -149,7 +173,9 @@ const VideoCard = ({ video }) => {
 			<NavLink
 				to={`/explore/${videoId}`}
 				className={`card card-vertical video-container video-card flex-col flex-align-center flex-justify-between ${
-					userDataLoading ? "disabled-card" : ""
+					userDataLoading || isOnGoingNetworkCall
+						? "disabled-card"
+						: ""
 				}`}
 			>
 				<div className="card-header">
@@ -184,6 +210,14 @@ const VideoCard = ({ video }) => {
 						</div>
 					</div>
 					<div className="flex-row video-actions-container">
+						{page === "playlist" ? (
+							<button
+								className="btn btn-primary btn-icon"
+								onClick={handleDeleteVideoFromPlaylist}
+							>
+								<Delete />
+							</button>
+						) : null}
 						<div className="video-options-icon">
 							<button
 								className="btn btn-icon btn-primary br-2"
@@ -202,14 +236,19 @@ const VideoCard = ({ video }) => {
 						) : null}
 					</div>
 					{showVideoOptions ? (
-						<div className="video-options-list br-2">
+						<div
+							className="video-options-list br-2"
+							ref={videoOptionsReference}
+						>
 							<button
 								className={`${
-									userDataLoading
+									userDataLoading || isOnGoingNetworkCall
 										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
 										: "btn px-0-75 py-0-5 btn-text-icon"
 								}`}
-								disabled={userDataLoading}
+								disabled={
+									userDataLoading || isOnGoingNetworkCall
+								}
 								onClick={handleWatchLaterChange}
 							>
 								{isVideoInWatchLater ? (
@@ -226,11 +265,13 @@ const VideoCard = ({ video }) => {
 							</button>
 							<button
 								className={`${
-									userDataLoading
+									userDataLoading || isOnGoingNetworkCall
 										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
 										: "btn px-0-75 py-0-5 btn-text-icon"
 								}`}
-								disabled={userDataLoading}
+								disabled={
+									userDataLoading || isOnGoingNetworkCall
+								}
 								onClick={handleLikedVideoChange}
 							>
 								{isVideoInLikes ? (
@@ -247,11 +288,13 @@ const VideoCard = ({ video }) => {
 							</button>
 							<button
 								className={`${
-									userDataLoading
+									userDataLoading || isOnGoingNetworkCall
 										? "btn px-0-75 py-0-5 btn-text-icon btn-disabled"
 										: "btn px-0-75 py-0-5 btn-text-icon"
 								}`}
-								disabled={userDataLoading}
+								disabled={
+									userDataLoading || isOnGoingNetworkCall
+								}
 								onClick={handleShowPlaylistModal}
 							>
 								Add to playlist

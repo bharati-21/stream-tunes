@@ -10,7 +10,9 @@ const isFormDataValid = (
 	const isMinNameLength = (name) => name.trim().length >= 2;
 
 	const isPasswordValid = (passwordValue) =>
-		/^[A-Za-z0-9]{7,15}$/.test(passwordValue);
+		/^(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*[!_*@#$%^&+=]).*$/.test(
+			passwordValue
+		);
 	const isNameValid = (name) => /^[A-Za-z]{2,20}$/.test(name);
 
 	if (!isMinNameLength(firstName)) {
@@ -78,7 +80,7 @@ const isFormDataValid = (
 			payload: {
 				error: "passwordError",
 				errorValue:
-					"Invalid password. Password should only contain only letters and numbers.",
+					"Invalid password. Password should contain at least one lowercase, uppercase, number and a special character.",
 			},
 		});
 		return false;
@@ -90,7 +92,7 @@ const isFormDataValid = (
 			payload: {
 				error: "confirmPasswordError",
 				errorValue:
-					"Invalid confirm password. Confirm password must have least 7 characters.",
+					"Invalid password. Password should contain at least one lowercase, uppercase, number and a special character.",
 			},
 		});
 		return false;
@@ -108,7 +110,7 @@ const isFormDataValid = (
 		return false;
 	}
 
-	if (password !== confirmPassword) {
+	if (password.trim() !== confirmPassword.trim()) {
 		setError("Passwords do not match");
 		return false;
 	}

@@ -15,10 +15,15 @@ const CategoryList = () => {
 				<h3 className="text-center error-color">{categoriesError}</h3>
 			) : (
 				<div className="category-container my-3">
-					<h3 className="section-head mb-3 text-center">Categories</h3>
+					<h3 className="section-head mb-3 text-center">
+						Categories
+					</h3>
 					<div className="category-list-wrapper">
 						{categories.map((category) => (
-							<CategoryItem category={category} key={category._id} />
+							<CategoryItem
+								category={category}
+								key={category._id}
+							/>
 						))}
 					</div>
 				</div>

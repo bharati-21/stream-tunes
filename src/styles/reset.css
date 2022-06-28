@@ -37,6 +37,22 @@ a, i {
     -o-border-radius: var(--br-2);
 }
 
+.btn-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.btn.btn-login-test:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.link-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
 .card {
     border-radius: var(--br-2);
     border: none;

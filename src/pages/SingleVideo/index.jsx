@@ -18,9 +18,9 @@ import {
 	likeVideoServiceCall,
 	watchLaterServiceCall,
 } from "utils";
-import { useToast } from "custom-hooks/useToast";
 import PlaylistPortal from "PlaylistPortal";
 import { postVideoToHistoryService } from "services";
+import { useDocumentTitle, useToast } from "custom-hooks";
 
 const SingleVideo = () => {
 	const { videosError, videosLoading, videos } = useVideos();
@@ -31,9 +31,9 @@ const SingleVideo = () => {
 	const { showToast } = useToast();
 	const navigate = useNavigate();
 
-	const videoToBeDisplayed = videos.find((video) => video._id === videoId);
+	const videoToBeDisplayed = videos?.find((video) => video._id === videoId);
 
-	const videoCreatorWords = videoToBeDisplayed?.creator.split(/\s|-/, 3);
+	const videoCreatorWords = videoToBeDisplayed?.creator?.split(/\s|-/, 3);
 	const videoCreatorAbbreviation = videoCreatorWords
 		?.map((word) => word[0].toUpperCase())
 		.join("");
@@ -45,6 +45,7 @@ const SingleVideo = () => {
 		findVideoInList(likes, videoToBeDisplayed) || []
 	);
 	const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+	const setDocumentTitle = useDocumentTitle();
 
 	useEffect(() => {
 		if (isAuth) {
@@ -56,7 +57,10 @@ const SingleVideo = () => {
 	}, [watchlater, likes]);
 
 	useEffect(() => {
-		if (videoToBeDisplayed) postVideoToHistoryServiceCall();
+		if (videoToBeDisplayed) {
+			postVideoToHistoryServiceCall();
+			setDocumentTitle(`StreamTunes | ${videoToBeDisplayed?.title}`);
+		}
 	}, [videoToBeDisplayed]);
 
 	const postVideoToHistoryServiceCall = async () => {
@@ -198,12 +202,14 @@ const SingleVideo = () => {
 											</div>
 											<div className="flex-col video-creator-info flex-align-start">
 												<h6 className="creator-name text-reg">
-													{videoToBeDisplayed.creator}
+													{
+														videoToBeDisplayed?.creator
+													}
 												</h6>
 												<div className="video-views-date flex-row flex-align-center flex-justify-center flex-wrap">
 													<div className="video-views text-xs">
 														{getFormattedViews(
-															videoToBeDisplayed.views
+															videoToBeDisplayed?.views
 														)}
 													</div>
 													<div className="dot-separator">
@@ -258,7 +264,7 @@ const SingleVideo = () => {
 								</div>
 
 								<div className="video-description">
-									{videoToBeDisplayed.description}
+									{videoToBeDisplayed?.description}
 								</div>
 							</div>
 						</div>

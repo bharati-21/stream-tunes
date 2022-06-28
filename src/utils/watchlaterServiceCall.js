@@ -1,17 +1,15 @@
-import { deleteVideoFromWatchLaterService, postVideoToWatchLaterService } from "services";
+import {
+	deleteVideoFromWatchLaterService,
+	postVideoToWatchLaterService,
+} from "services";
 
 const watchLaterServiceCall = async (
 	showToast,
 	userDataDispatch,
 	isVideoInWatchLater,
-    authToken,
-    video
+	authToken,
+	video
 ) => {
-	userDataDispatch({
-		type: "SET_LOADER",
-		payload: { loading: true },
-	});
-
 	try {
 		const {
 			data: { watchlater },
@@ -38,11 +36,6 @@ const watchLaterServiceCall = async (
 			"error"
 		);
 	}
-
-	userDataDispatch({
-		type: "SET_LOADER",
-		payload: { loading: false },
-	});
 };
 
 export { watchLaterServiceCall };
