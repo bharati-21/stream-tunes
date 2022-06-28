@@ -16,6 +16,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 
 	const [playlistName, setPlaylistName] = useState("");
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [isOnGoingNetworkCall, setIsOnGoingNetworkCall] = useState(false);
 
 	const playlistModalReference = useRef(null);
 	const playlistInputReference = useRef(null);
@@ -38,10 +39,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 			return setErrorMessage("Playlist name cannot be empty!");
 		}
 
-		userDataDispatch({
-			type: "SET_LOADER",
-			payload: { loading: true },
-		});
+		setIsOnGoingNetworkCall(true);
 
 		try {
 			const {
@@ -64,14 +62,11 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 					"error"
 				);
 		}
-
-		userDataDispatch({
-			type: "SET_LOADER",
-			payload: { loading: false },
-		});
+		setIsOnGoingNetworkCall(false);
 	};
 
-	const buttonDisabled = userDataLoading ? "btn-disabled" : "";
+	const buttonDisabled =
+		userDataLoading || isOnGoingNetworkCall ? "btn-disabled" : "";
 
 	useOutsideClick(playlistModalReference, () => setShowPlaylistModal(false));
 
@@ -86,6 +81,7 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 				<button
 					className={`btn btn-primary btn-icon btn-close-modal ${buttonDisabled}`}
 					type="button"
+					disabled={userDataLoading || isOnGoingNetworkCall}
 					onClick={(e) => setShowPlaylistModal(false)}
 				>
 					<Close />
@@ -118,12 +114,14 @@ const PlaylistModal = ({ video, setShowPlaylistModal }) => {
 							autoComplete="off"
 							onChange={handlePlaylistNameChange}
 							value={playlistName}
+							disabled={userDataLoading || isOnGoingNetworkCall}
 							ref={playlistInputReference}
 						/>
 						<button
 							type="submit"
 							className={`btn btn-primary btn-create-playlist ${buttonDisabled}`}
 							onClick={handleCreatePlaylist}
+							disabled={userDataLoading || isOnGoingNetworkCall}
 						>
 							<Add />
 						</button>

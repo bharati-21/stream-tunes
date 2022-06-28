@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Sort } from "@mui/icons-material";
 
 import { useVideos } from "contexts";
+import { useOutsideClick } from "custom-hooks";
 
 const SortingOptionsList = () => {
 	const { videosSortOption, videosDispatch } = useVideos();
 
 	const [showSortingOptions, setShowSortingOptions] = useState(false);
+	const sortingOptionsRef = useRef(null);
 
 	const handleShowSortingOptionsChange = (event) =>
 		setShowSortingOptions(
@@ -19,11 +21,14 @@ const SortingOptionsList = () => {
 			payload: { videosSortOption: option },
 		});
 
+	useOutsideClick(sortingOptionsRef, () => setShowSortingOptions(false));
+
 	return (
 		<div className="sorting-options-container flex-row flex-align-center flex-justify-between flex-wrap">
 			<button
 				className="btn btn-primary btn-icon"
 				onClick={handleShowSortingOptionsChange}
+				ref={sortingOptionsRef}
 			>
 				Sort
 				<span className="icon mui">

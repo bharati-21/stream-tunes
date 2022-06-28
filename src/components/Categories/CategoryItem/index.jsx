@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CategoryItem = ({ category }) => {
-	const { _id, categoryName, categoryImg } = category;
+	const { categoryName, categoryImg } = category;
 
 	const { categoriesDispatch } = useCategories();
 

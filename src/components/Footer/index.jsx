@@ -10,6 +10,7 @@ const Footer = () => {
 					<a
 						href="https://bharati-21.github.io/"
 						className="primary-color"
+						target="_blank"
 					>
 						Bharati Subramanian
 					</a>
@@ -19,6 +20,7 @@ const Footer = () => {
 						<a
 							href="https://twitter.com/_bhaaratii"
 							className="btn btn-link"
+							target="_blank"
 						>
 							<span className="icon">
 								<i className="fa-brands fa-twitter"></i>
@@ -29,6 +31,7 @@ const Footer = () => {
 						<a
 							href="https://github.com/bharati-21"
 							className="btn btn-link"
+							target="_blank"
 						>
 							<span className="icon">
 								<i className="fa-brands fa-github"></i>
@@ -39,6 +42,7 @@ const Footer = () => {
 						<a
 							href="https://www.linkedin.com/in/bharati-subramanian-29734b152/"
 							className="btn btn-link"
+							target="_blank"
 						>
 							<span className="icon">
 								<i className="fa-brands fa-linkedin-in"></i>
@@ -49,6 +53,7 @@ const Footer = () => {
 						<a
 							href="mailto:bharatisharada@gmail.com"
 							className="btn btn-link"
+							target="_blank"
 						>
 							<span className="icon">
 								<i className="fa-solid fa-envelope"></i>

@@ -33,30 +33,6 @@ const Explore = () => {
 	const setDocumentTitle = useDocumentTitle();
 	useEffect(() => setDocumentTitle("StreamTunes | Explore"), []);
 
-	useEffect(() => {
-		if (videosSortOption) {
-			videosDispatch({
-				type: "SET_LOADER",
-				payload: { videosLoading: true },
-			});
-
-			const interval = setTimeout(() => {
-				videosDispatch({
-					type: "SET_LOADER",
-					payload: { videosLoading: false },
-				});
-			}, 800);
-
-			return () => {
-				videosDispatch({
-					type: "SET_LOADER",
-					payload: { videosLoading: false },
-				});
-				clearInterval(interval);
-			};
-		}
-	}, [videosSortOption]);
-
 	return (
 		<main className="main explore-main">
 			{videosError || categoriesError ? (

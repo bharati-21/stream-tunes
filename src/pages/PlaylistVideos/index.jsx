@@ -44,7 +44,7 @@ const PlaylistVideos = () => {
 						</Link>
 					</div>
 					{videos?.length ? (
-						<VideosList videos={videos} />
+						<VideosList videos={videos} page="playlist" />
 					) : (
 						<div className="py-3">
 							<h5 className="text-center mx-auto px-3 info-color">

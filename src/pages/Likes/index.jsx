@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "pages/Explore/explore.css";
 
 import { useUserData } from "contexts";
@@ -16,18 +16,25 @@ const Likes = () => {
 	const setDocumentTitle = useDocumentTitle();
 	useEffect(() => setDocumentTitle("StreamTunes | Likes"), []);
 
+	const [isOnGoingNetworkCall, setIsOnGoingNetworkCall] = useState(false);
+
 	return (
 		<main className="main watch-later-main">
 			{likesError ? (
 				<h3 className="text-center mx-auto px-3 error-color my-3">
 					Liked videos could not be loaded. Please try again later.
 				</h3>
-			) : userDataLoading || userDataLoading ? (
+			) : (userDataLoading || userDataLoading) &&
+			  !isOnGoingNetworkCall ? (
 				<Loader />
 			) : (
 				<div className="container flex-col flex-align-center flex-justify-start py-1-5 px-3">
 					{likes?.length ? (
-						<VideosList videos={likes} />
+						<VideosList
+							videos={likes}
+							setIsOnGoingNetworkCall={setIsOnGoingNetworkCall}
+							page="likes"
+						/>
 					) : (
 						<div className="py-3">
 							<h5 className="text-center mx-auto px-3 info-color">

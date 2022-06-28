@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
 	DarkMode,
 	LightMode,
 	Menu,
 	Close,
-	Search,
 	Logout,
 	Login,
 } from "@mui/icons-material";
@@ -17,18 +16,19 @@ import { useTheme, useAuth, useVideos } from "contexts/";
 import { useToast } from "custom-hooks";
 import {
 	useMappedSidebarRoutes,
-	useDebounceSearchResults,
 	useOutsideClick,
 } from "custom-hooks";
+import { SearchBar } from "./SearchBar";
 
 const Navbar = () => {
-	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
-	const sidebarHamburgerMenuReference = useRef(null);
-
-	const { theme, setTheme } = useTheme();
+		const { theme, setTheme } = useTheme();
 	const { isAuth, authDispatch } = useAuth();
-	const { videosSearchText } = useVideos();
 	const navigate = useNavigate();
+    const { videosSearchText } = useVideos();
+
+    const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+	const sidebarHamburgerMenuReference = useRef(null);
+    const [searchText, setSearchText] = useState(videosSearchText);
 
 	const { showToast } = useToast();
 	const { mappedSidebarRoutes } = useMappedSidebarRoutes();
@@ -51,12 +51,6 @@ const Navbar = () => {
 		e.stopPropagation();
 		setShowHamburgerMenu(hamburgerMenuState);
 	};
-
-	const navigateToExplore = (event) => {
-		event.preventDefault();
-	};
-
-	const { searchText, handleSearchTextChange } = useDebounceSearchResults();
 
 	useOutsideClick(sidebarHamburgerMenuReference, () =>
 		setShowHamburgerMenu(false)
@@ -94,28 +88,9 @@ const Navbar = () => {
 						</h5>
 					</Link>
 				</div>
-				<form
-					className="search-form desktop-search-form flex-row flex-align-center flex-justify-between"
-					onSubmit={navigateToExplore}
-				>
-					<input
-						type="search"
-						id="input-desktop-search"
-						className="input-text text-sm px-0-25"
-						placeholder="Search by video name..."
-						value={searchText}
-						onChange={handleSearchTextChange}
-						required
-					/>
-					<button
-						type="submit"
-						className="btn btn-primary btn-icon text-sm"
-					>
-						<span className="icon">
-							<Search />
-						</span>
-					</button>
-				</form>
+				<div className="desktop-search-form">
+					<SearchBar searchText={searchText} setSearchText={setSearchText} />
+				</div>
 
 				<ul className="list list-inline flex-row flex-align-center flex-justify-end navbar-navlinks navbar-right-menu">
 					<li className="link navlink">
@@ -177,28 +152,9 @@ const Navbar = () => {
 					</ul>
 				</div>
 			</div>
-			<form
-				className="search-form mobile-search-form flex-row flex-align-center flex-wrap flex-justify-between"
-				onSubmit={navigateToExplore}
-			>
-				<input
-					type="search"
-					id="input-mobile-search"
-					className="input-text text-sm"
-					onChange={handleSearchTextChange}
-					value={videosSearchText}
-					placeholder="Search by video name"
-					required
-				/>
-				<button
-					type="submit"
-					className="btn btn-primary btn-icon text-sm"
-				>
-					<span className="icon">
-						<Search />
-					</span>
-				</button>
-			</form>
+			<div className="mobile-search-form">
+				<SearchBar searchText={searchText} setSearchText={setSearchText} />
+			</div>
 		</nav>
 	);
 };

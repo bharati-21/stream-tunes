@@ -7,11 +7,11 @@ const useDebounceSearchResults = () => {
 	const { videosDispatch } = useVideos();
 	const navigate = useNavigate();
 
-	const handleSearchTextChange = (event) => {
-		setSearchText(event.target.value);
-		if (event.target.value.trim()) {
-			updateSearchedUsers(event.target.value);
-		}
+	const setSearchedText = (searchText) => {
+		videosDispatch({
+			type: "SET_SEARCH_TEXT",
+			payload: { videosSearchText: searchText },
+		});
 	};
 
 	const debounce = (callback, delay = 500) => {
@@ -24,18 +24,15 @@ const useDebounceSearchResults = () => {
 		};
 	};
 
-	const updateSearchedUsers = useCallback(
-		debounce((searchText) => {
-			videosDispatch({
-				type: "SET_SEARCH_TEXT",
-				payload: { videosSearchText: searchText },
-			});
-			if (location.pathName !== "/explore") {
-				navigate("/explore");
-			}
-		}),
-		[]
-	);
+	const debouncedSetSearchedText = useCallback(debounce(setSearchedText), []);
+
+	const handleSearchTextChange = (event) => {
+		setSearchText(event.target.value);
+		if (location.pathName !== "/explore") {
+			navigate("/explore");
+		}
+		debouncedSetSearchedText(event.target.value);
+	};
 
 	return { searchText, handleSearchTextChange };
 };
